@@ -16,8 +16,6 @@ export const moveStageHandler = (userId, payload) => {
   // 오름차순 -> 유저의 현재 스테이지
   currentStages.sort((a, b) => a.id - b.id);
   const currentStage = currentStages[currentStages.length - 1];
-  console.log(currentStages);
-  console.log(payload.currentStage);
 
   // 클라이언트 vs 서버 비교
   if (currentStage.id !== payload.currentStage) {

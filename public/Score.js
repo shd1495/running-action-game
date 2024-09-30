@@ -17,22 +17,22 @@ class Score {
     // 스테이지 데이터 데이블
     const stages = this.stageData;
     // 현재 스테이지 정보
-    const currStage = stages.filter((stage) => stage.id === this.currentStageId);
-    const nextStage = stages.filter((stage) => stage.id === this.currentStageId + 1);
+    const currStage = stages.find((stage) => stage.id === this.currentStageId);
+    const nextStage = stages.find((stage) => stage.id === this.currentStageId + 1);
 
-    this.score += currStage[0].scorePerSecond * deltaTime * 0.01;
+    this.score += currStage.scorePerSecond * deltaTime * 0.01;
     // 점수가 100점 이상이 될 시 서버에 메세지 전송
-    if (this.score >= nextStage[0]?.score) {
+    if (this.score >= nextStage?.score) {
       // 메시지
     }
     // 다음 스테이지 필요 점수에 도달시 다음 스테이지로 이동
-    if (Math.floor(this.score) >= nextStage[0]?.score && this.stageChange) {
+    if (Math.floor(this.score) >= nextStage?.score && this.stageChange) {
       this.stageChange = false;
-      sendEvent(11, { currentStage: currStage[0].id, targetStage: nextStage[0].id });
-      this.currentStageId = nextStage[0].id;
+      sendEvent(11, { currentStage: currStage.id, targetStage: nextStage.id });
+      this.currentStageId = nextStage.id;
     }
 
-    if (Math.floor(this.score) < nextStage[0]?.score) {
+    if (Math.floor(this.score) < nextStage?.score) {
       this.stageChange = true;
     }
   }
