@@ -18,6 +18,7 @@ import {
   GROUND_SPEED,
   CACTI_CONFIG,
   ITEM_CONFIG,
+  STAGE_CONFIG,
 } from './Constants.js';
 
 const canvas = document.getElementById('game');
@@ -85,7 +86,7 @@ function createSprites() {
 
   itemController = new ItemController(ctx, itemImages, scaleRatio, GROUND_SPEED);
 
-  score = new Score(ctx, scaleRatio);
+  score = new Score(ctx, scaleRatio, STAGE_CONFIG);
 }
 
 function getScaleRatio() {

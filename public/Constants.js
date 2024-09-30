@@ -1,4 +1,5 @@
 import item from './assets/item.json' with { type: 'json' };
+import stage from './assets/stage.json' with { type: 'json' };
 
 export const CLIENT_VERSION = '1.0.0';
 
@@ -30,9 +31,6 @@ export const CACTI_CONFIG = [
 
 // 아이템
 export const ITEM_CONFIG = item.data;
-// [
-//   { width: 50 / 1.5, height: 50 / 1.5, id: 1, image: 'images/items/pokeball_red.png' },
-//   { width: 50 / 1.5, height: 50 / 1.5, id: 2, image: 'images/items/pokeball_yellow.png' },
-//   { width: 50 / 1.5, height: 50 / 1.5, id: 3, image: 'images/items/pokeball_purple.png' },
-//   { width: 50 / 1.5, height: 50 / 1.5, id: 4, image: 'images/items/pokeball_cyan.png' },
-// ];
+
+// 스테이지
+export const STAGE_CONFIG = stage.data;
