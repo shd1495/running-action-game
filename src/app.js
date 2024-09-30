@@ -15,6 +15,7 @@ const server = createServer(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
+// 소켓 초기화
 initSocket(server);
 
 server.listen(PORT, async () => {
