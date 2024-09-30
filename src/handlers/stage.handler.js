@@ -16,6 +16,8 @@ export const moveStageHandler = (userId, payload) => {
   // 오름차순 -> 유저의 현재 스테이지
   currentStages.sort((a, b) => a.id - b.id);
   const currentStage = currentStages[currentStages.length - 1];
+  console.log(currentStages);
+  console.log(payload.currentStage);
 
   // 클라이언트 vs 서버 비교
   if (currentStage.id !== payload.currentStage) {
@@ -43,9 +45,9 @@ export const moveStageHandler = (userId, payload) => {
   // 1스테이지 -> 2스테이지
   // 5 -> 임의로 정한 오차 범위
   // 다음 스테이지의 점수를 가져와서 그 점수를 기준으로 조건문 수정
-  if (elapsedTime < 100 || elapsedTime > 105) {
-    return { status: '실패', message: '유효하지 않은 경과 시간입니다.' };
-  }
+  // if (elapsedTime < 100 || elapsedTime > 105) {
+  //   return { status: '실패', message: '유효하지 않은 경과 시간입니다.' };
+  // }
 
   // 현재 점수와 데이터 테이블의 점수를 비교해서 현재 점수가 데이터 테이블의 점수보다 높을 경우 스테이지 이동
 

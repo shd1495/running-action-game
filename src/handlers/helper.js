@@ -5,7 +5,7 @@ import handlerMappings from './handlerMapping.js';
 
 export const handleDisconnect = (socket, uuid) => {
   removeUser(socket.id);
-  console.log(`${socket.id}유저가 연결을 해제했습니다`);
+  console.log(`${socket.id} 유저가 연결을 해제했습니다`);
   console.log('현재 접속 중인 유저들:', getUser());
 };
 
