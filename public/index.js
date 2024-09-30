@@ -16,25 +16,12 @@ import {
   GROUND_WIDTH,
   GROUND_HEIGHT,
   GROUND_SPEED,
+  CACTI_CONFIG,
+  ITEM_CONFIG,
 } from './Constants.js';
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
-
-// 선인장
-const CACTI_CONFIG = [
-  { width: 48 / 1.5, height: 100 / 1.5, image: 'images/cactus_1.png' },
-  { width: 98 / 1.5, height: 100 / 1.5, image: 'images/cactus_2.png' },
-  { width: 68 / 1.5, height: 70 / 1.5, image: 'images/cactus_3.png' },
-];
-
-// 아이템
-const ITEM_CONFIG = [
-  { width: 50 / 1.5, height: 50 / 1.5, id: 1, image: 'images/items/pokeball_red.png' },
-  { width: 50 / 1.5, height: 50 / 1.5, id: 2, image: 'images/items/pokeball_yellow.png' },
-  { width: 50 / 1.5, height: 50 / 1.5, id: 3, image: 'images/items/pokeball_purple.png' },
-  { width: 50 / 1.5, height: 50 / 1.5, id: 4, image: 'images/items/pokeball_cyan.png' },
-];
 
 // 게임 요소들
 let player = null;

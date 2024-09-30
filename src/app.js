@@ -17,10 +17,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 initSocket(server);
 
-app.get('/', (req, res) => {
-  res.send('hello world');
-});
-
 server.listen(PORT, async () => {
   console.log(`${PORT} 포트로 서버가 열렸습니다.`);
 
