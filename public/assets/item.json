@@ -17,6 +17,14 @@
       "score": 30,
       "image": "images/items/pokeball_purple.png"
     },
-    { "width": 33, "height": 33, "id": 4, "score": 40, "image": "images/items/pokeball_cyan.png" }
+    { "width": 33, "height": 33, "id": 4, "score": 40, "image": "images/items/pokeball_cyan.png" },
+    {
+      "width": 33,
+      "height": 33,
+      "id": 5,
+      "score": 50,
+      "image": "images/items/pokeball_orange.png"
+    },
+    { "width": 33, "height": 33, "id": 6, "score": 60, "image": "images/items/pokeball_pink.png" }
   ]
 }
