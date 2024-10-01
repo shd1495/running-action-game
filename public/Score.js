@@ -42,8 +42,8 @@ class Score {
 
   getItem(itemId) {
     const item = this.itemData.find((item) => item.id == itemId);
-    console.log(item);
     this.score += item.score || 0;
+    if (item) sendEvent(12, { timestamp: Date.now(), itemId: itemId });
   }
 
   reset() {
