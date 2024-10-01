@@ -19,6 +19,7 @@ import {
   CACTI_CONFIG,
   ITEM_CONFIG,
   STAGE_CONFIG,
+  ITEM_UNLOCK,
 } from './Constants.js';
 
 const canvas = document.getElementById('game');
@@ -84,9 +85,9 @@ function createSprites() {
     };
   });
 
-  itemController = new ItemController(ctx, itemImages, scaleRatio, GROUND_SPEED);
+  itemController = new ItemController(ctx, itemImages, scaleRatio, GROUND_SPEED, ITEM_UNLOCK);
 
-  score = new Score(ctx, scaleRatio, STAGE_CONFIG);
+  score = new Score(ctx, scaleRatio, STAGE_CONFIG, ITEM_CONFIG);
 }
 
 function getScaleRatio() {

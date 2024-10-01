@@ -1,4 +1,5 @@
 import item from './assets/item.json' with { type: 'json' };
+import itemUnlock from './assets/item_unlock.json' with { type: 'json' };
 import stage from './assets/stage.json' with { type: 'json' };
 
 export const CLIENT_VERSION = '1.0.0';
@@ -31,6 +32,9 @@ export const CACTI_CONFIG = [
 
 // 아이템
 export const ITEM_CONFIG = item.data;
+
+// 아이템 해금
+export const ITEM_UNLOCK = itemUnlock.data;
 
 // 스테이지
 export const STAGE_CONFIG = stage.data;
