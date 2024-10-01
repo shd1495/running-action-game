@@ -30,7 +30,6 @@ class ItemController {
   createItem() {
     // 스테이지별 아이템 생성
     const itemTable = this.itemUnlockData.find((item) => this.currentStage === item.stageId);
-    console.log(itemTable.itemId);
     const index = this.getRandomNumber(0, itemTable?.itemId.length - 1);
     const itemInfo = this.itemImages[index];
     const x = this.canvas.width * 1.5;
