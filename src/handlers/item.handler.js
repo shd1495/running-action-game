@@ -18,6 +18,8 @@ export const getItemScoreHandler = (userId, payload) => {
   if (!userGetItem)
     return { status: '실패', message: '획득한 아이템이 존재하지 않는 아이템입니다.' };
 
+  // 아이템 생성 간격 검증
+
   setItem(userId, { timestamp, itemId });
   return { status: '성공', message: `아이템을 획득해 점수가 ${userGetItem.score}만큼 상승합니다.` };
 };

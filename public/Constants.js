@@ -7,6 +7,8 @@ export const CLIENT_VERSION = '1.0.0';
 export const GAME_SPEED_START = 1;
 export const GAME_SPEED_INCREMENT = 0.00001;
 
+export const FIRST_STAGE_ID = 1000;
+
 // 게임 크기
 export const GAME_WIDTH = 800;
 export const GAME_HEIGHT = 200;
