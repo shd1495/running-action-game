@@ -2,11 +2,12 @@
   "name": "item_unlock",
   "version": "1.0.0",
   "data": [
-    { "id": 101, "stage_id": 1001, "item_id": [1] },
-    { "id": 102, "stage_id": 1002, "item_id": [1, 2] },
-    { "id": 103, "stage_id": 1003, "item_id": [1, 2, 3] },
-    { "id": 104, "stage_id": 1004, "item_id": [1, 2, 3, 4] },
-    { "id": 105, "stage_id": 1005, "item_id": [1, 2, 3, 4, 5] },
-    { "id": 106, "stage_id": 1006, "item_id": [1, 2, 3, 4, 5, 6] }
+    { "id": 100, "stageId": 1000, "itemId": [1] },
+    { "id": 101, "stageId": 1001, "itemId": [1, 2] },
+    { "id": 102, "stageId": 1002, "itemId": [1, 2, 3] },
+    { "id": 103, "stageId": 1003, "itemId": [1, 2, 3, 4] },
+    { "id": 104, "stageId": 1004, "itemId": [1, 2, 3, 4, 5] },
+    { "id": 105, "stageId": 1005, "itemId": [1, 2, 3, 4, 5, 6] },
+    { "id": 106, "stageId": 1006, "itemId": [1, 2, 3, 4, 5, 6] }
   ]
 }

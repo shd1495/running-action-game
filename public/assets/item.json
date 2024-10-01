@@ -23,8 +23,8 @@
       "height": 33,
       "id": 5,
       "score": 50,
-      "image": "images/items/pokeball_orange.png"
+      "image": "images/items/pokeball_pink.png"
     },
-    { "width": 33, "height": 33, "id": 6, "score": 60, "image": "images/items/pokeball_pink.png" }
+    { "width": 33, "height": 33, "id": 6, "score": 60, "image": "images/items/pokeball_orange.png" }
   ]
 }
