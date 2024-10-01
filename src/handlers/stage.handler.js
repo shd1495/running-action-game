@@ -8,9 +8,8 @@ export const moveStageHandler = (userId, payload) => {
   // payload -> 현재 스테이지(currentStages), 다음 스테이지(targetStages)
   // 유저의 현재 스테이지 정보
   let currentStages = getStage(userId);
-  if (!currentStages.length) {
+  if (!currentStages.length)
     return { status: '실패', message: '유저의 현재 스테이지를 찾을 수 없습니다.' };
-  }
 
   // currentStages 검증
   // 오름차순 -> 유저의 현재 스테이지
@@ -18,23 +17,20 @@ export const moveStageHandler = (userId, payload) => {
   const currentStage = currentStages[currentStages.length - 1];
 
   // 클라이언트 vs 서버 비교
-  if (currentStage.id !== payload.currentStage) {
+  if (currentStage.id !== payload.currentStage)
     return { status: '실패', message: '현재 스테이지가 일치하지 않습니다.' };
-  }
 
   const { stages } = getGameAssets();
   const currentStageData = stages.data.filter((stage) => stage.id === payload.currentStage);
   console.log('current', currentStageData);
-  if (currentStageData.length === 0) {
+  if (currentStageData.length === 0)
     return { status: '실패', message: '현재 스테이지를 찾을 수 없습니다.' };
-  }
 
   // targetStage 검증 < assets에 존재 여부
   const targetStageData = stages.data.filter((stage) => stage.id === payload.targetStage);
   console.log('target', targetStageData);
-  if (targetStageData.length === 0) {
+  if (targetStageData.length === 0)
     return { status: '실패', message: '다음 스테이지를 찾을 수 없습니다.' };
-  }
 
   // 점수 검증
   const serverTime = Date.now(); // 현재 타임스탬프

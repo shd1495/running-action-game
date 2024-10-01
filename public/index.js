@@ -19,6 +19,7 @@ import {
   CACTI_CONFIG,
   ITEM_CONFIG,
   STAGE_CONFIG,
+  ITEM_UNLOCK,
 } from './Constants.js';
 
 const canvas = document.getElementById('game');
@@ -84,9 +85,9 @@ function createSprites() {
     };
   });
 
-  itemController = new ItemController(ctx, itemImages, scaleRatio, GROUND_SPEED);
+  itemController = new ItemController(ctx, itemImages, scaleRatio, GROUND_SPEED, ITEM_UNLOCK);
 
-  score = new Score(ctx, scaleRatio, STAGE_CONFIG);
+  score = new Score(ctx, scaleRatio, STAGE_CONFIG, ITEM_CONFIG, itemController);
 }
 
 function getScaleRatio() {
@@ -144,6 +145,7 @@ function reset() {
 
   ground.reset();
   cactiController.reset();
+  itemController.reset();
   score.reset();
   gameSpeed = GAME_SPEED_START;
   // 게임시작 핸들러ID 2, payload 에는 게임 시작 시간

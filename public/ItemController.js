@@ -1,17 +1,19 @@
 import Item from './Item.js';
 
 class ItemController {
-  INTERVAL = 10000;
+  INTERVAL = 3000;
 
   nextInterval = null;
   items = [];
+  currentStage = 1000;
 
-  constructor(ctx, itemImages, scaleRatio, speed) {
+  constructor(ctx, itemImages, scaleRatio, speed, itemUnlockData) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.itemImages = itemImages;
     this.scaleRatio = scaleRatio;
     this.speed = speed;
+    this.itemUnlockData = itemUnlockData;
 
     this.setNextItemTime();
   }
@@ -25,7 +27,10 @@ class ItemController {
   }
 
   createItem() {
-    const index = this.getRandomNumber(0, this.itemImages.length - 1);
+    // 스테이지별 아이템 생성
+    const itemTable = this.itemUnlockData.find((item) => this.currentStage === item.stageId);
+    console.log(itemTable.itemId);
+    const index = this.getRandomNumber(0, itemTable?.itemId.length - 1);
     const itemInfo = this.itemImages[index];
     const x = this.canvas.width * 1.5;
     const y = this.getRandomNumber(10, this.canvas.height - itemInfo.height);
@@ -41,6 +46,10 @@ class ItemController {
     );
 
     this.items.push(item);
+  }
+
+  setCurrStage(stage) {
+    this.currentStage = stage;
   }
 
   update(gameSpeed, deltaTime) {
@@ -74,6 +83,7 @@ class ItemController {
 
   reset() {
     this.items = [];
+    this.currentStage = 1000;
   }
 }
 
