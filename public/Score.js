@@ -43,7 +43,7 @@ class Score {
   getItem(itemId) {
     const item = this.itemData.find((item) => item.id == itemId);
     console.log(item);
-    this.score += item.score;
+    this.score += item.score || 0;
   }
 
   reset() {
