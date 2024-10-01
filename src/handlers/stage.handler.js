@@ -22,6 +22,20 @@ export const moveStageHandler = (userId, payload) => {
     return { status: '실패', message: '현재 스테이지가 일치하지 않습니다.' };
   }
 
+  const { stages } = getGameAssets();
+  const currentStageData = stages.data.filter((stage) => stage.id === payload.currentStage);
+  console.log('current', currentStageData);
+  if (currentStageData.length === 0) {
+    return { status: '실패', message: '현재 스테이지를 찾을 수 없습니다.' };
+  }
+
+  // targetStage 검증 < assets에 존재 여부
+  const targetStageData = stages.data.filter((stage) => stage.id === payload.targetStage);
+  console.log('target', targetStageData);
+  if (targetStageData.length === 0) {
+    return { status: '실패', message: '다음 스테이지를 찾을 수 없습니다.' };
+  }
+
   // 점수 검증
   const serverTime = Date.now(); // 현재 타임스탬프
   const elapsedTime = (serverTime - currentStage.timestamp) / 1000; // 1초당 점수
@@ -29,15 +43,9 @@ export const moveStageHandler = (userId, payload) => {
   // 1스테이지 -> 2스테이지
   // 5 -> 임의로 정한 오차 범위
   // 다음 스테이지의 점수를 가져와서 그 점수를 기준으로 조건문 수정
-  if (elapsedTime < 10 || elapsedTime > 10.5) {
-    return { status: '실패', message: '유효하지 않은 경과 시간입니다.' };
-  }
-
-  // targetStage 검증 < assets에 존재 여부
-  const { stages } = getGameAssets();
-  if (!stages.data.some((stage) => stage.id === payload.targetStage)) {
-    return { status: '실패', message: '다음 스테이지를 찾을 수 없습니다.' };
-  }
+  // if (elapsedTime < 100 || elapsedTime > 105) {
+  //   return { status: '실패', message: '유효하지 않은 경과 시간입니다.' };
+  // }
 
   // 현재 점수와 데이터 테이블의 점수를 비교해서 현재 점수가 데이터 테이블의 점수보다 높을 경우 스테이지 이동
 
