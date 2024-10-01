@@ -6,12 +6,13 @@ class Score {
   stageChange = true;
   currentStageId = 1000;
 
-  constructor(ctx, scaleRatio, stageData, itemData) {
+  constructor(ctx, scaleRatio, stageData, itemData, itemController) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.scaleRatio = scaleRatio;
     this.stageData = stageData;
     this.itemData = itemData;
+    this.itemController = itemController;
   }
 
   update(deltaTime) {
@@ -31,6 +32,7 @@ class Score {
       this.stageChange = false;
       sendEvent(11, { currentStage: currStage.id, targetStage: nextStage.id });
       this.currentStageId = nextStage.id;
+      this.itemController.setCurrStage(this.currentStageId);
     }
 
     if (Math.floor(this.score) < nextStage?.score) {
@@ -61,6 +63,7 @@ class Score {
   }
 
   draw() {
+    const stage = this.currentStageId - 999;
     const highScore = Number(localStorage.getItem(this.HIGH_SCORE_KEY));
     const y = 20 * this.scaleRatio;
 
@@ -70,12 +73,15 @@ class Score {
 
     const scoreX = this.canvas.width - 75 * this.scaleRatio;
     const highScoreX = scoreX - 125 * this.scaleRatio;
+    const stageX = highScoreX - 125 * this.scaleRatio;
 
     const scorePadded = Math.floor(this.score).toString().padStart(6, 0);
     const highScorePadded = highScore.toString().padStart(6, 0);
+    const stagePadded = stage.toString().padStart(1, 1);
 
     this.ctx.fillText(scorePadded, scoreX, y);
     this.ctx.fillText(`HI ${highScorePadded}`, highScoreX, y);
+    this.ctx.fillText(`STAGE ${stagePadded}`, stageX, y);
   }
 }
 

@@ -48,6 +48,10 @@ class ItemController {
     this.items.push(item);
   }
 
+  setCurrStage(stage) {
+    this.currentStage = stage;
+  }
+
   update(gameSpeed, deltaTime) {
     if (this.nextInterval <= 0) {
       this.createItem();
@@ -79,6 +83,7 @@ class ItemController {
 
   reset() {
     this.items = [];
+    this.currentStage = 1000;
   }
 }
 
