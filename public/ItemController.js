@@ -1,11 +1,12 @@
 import Item from './Item.js';
+import { FIRST_STAGE_ID } from './Constants.js';
 
 class ItemController {
   INTERVAL = 3000;
 
   nextInterval = null;
   items = [];
-  currentStage = 1000;
+  currentStage = FIRST_STAGE_ID;
 
   constructor(ctx, itemImages, scaleRatio, speed, itemUnlockData) {
     this.ctx = ctx;
@@ -29,7 +30,6 @@ class ItemController {
   createItem() {
     // 스테이지별 아이템 생성
     const itemTable = this.itemUnlockData.find((item) => this.currentStage === item.stageId);
-    console.log(itemTable.itemId);
     const index = this.getRandomNumber(0, itemTable?.itemId.length - 1);
     const itemInfo = this.itemImages[index];
     const x = this.canvas.width * 1.5;
@@ -83,7 +83,7 @@ class ItemController {
 
   reset() {
     this.items = [];
-    this.currentStage = 1000;
+    this.currentStage = FIRST_STAGE_ID;
   }
 }
 

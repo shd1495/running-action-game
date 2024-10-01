@@ -1,10 +1,11 @@
 import { sendEvent } from './Socket.js';
+import { FIRST_STAGE_ID } from './Constants.js';
 
 class Score {
   score = 0;
   HIGH_SCORE_KEY = 'highScore';
   stageChange = true;
-  currentStageId = 1000;
+  currentStageId = FIRST_STAGE_ID;
 
   constructor(ctx, scaleRatio, stageData, itemData, itemController) {
     this.ctx = ctx;
@@ -22,7 +23,7 @@ class Score {
     const currStage = stages.find((stage) => stage.id === this.currentStageId);
     const nextStage = stages.find((stage) => stage.id === this.currentStageId + 1);
 
-    this.score += currStage.scorePerSecond * deltaTime * 0.001;
+    this.score += currStage.scorePerSecond * deltaTime * 0.01;
     // 점수가 100점 이상이 될 시 서버에 메세지 전송
     if (this.score >= nextStage?.score) {
       // 메시지
@@ -30,7 +31,11 @@ class Score {
     // 다음 스테이지 필요 점수에 도달시 다음 스테이지로 이동
     if (Math.floor(this.score) >= nextStage?.score && this.stageChange) {
       this.stageChange = false;
-      sendEvent(11, { currentStage: currStage.id, targetStage: nextStage.id });
+      sendEvent(11, {
+        currentStage: currStage.id,
+        targetStage: nextStage.id,
+        timestamp: Date.now(),
+      });
       this.currentStageId = nextStage.id;
       this.itemController.setCurrStage(this.currentStageId);
     }
@@ -48,7 +53,7 @@ class Score {
 
   reset() {
     this.score = 0;
-    this.currentStageId = 1000;
+    this.currentStageId = FIRST_STAGE_ID;
   }
 
   setHighScore() {

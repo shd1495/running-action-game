@@ -2,14 +2,14 @@ import { getGameAssets } from '../init/assets.js';
 import { clearItem } from '../models/item.model.js';
 import { clearStage, getStage, setStage } from '../models/stage.model.js';
 
-export const gameStart = (uuid, payload) => {
+export const gameStart = (userId, payload) => {
   const { stages } = getGameAssets();
-  clearStage(uuid);
-  clearItem(uuid);
+  clearStage(userId);
+  clearItem(userId);
   // stages 배열에서 0번째 -> 첫 스테이지
   // 클라이언트의 정보를 그대로 저장하는 부분 주의
-  setStage(uuid, stages.data[0].id, payload.timestamp);
-  //console.log('Stage: ', getStage(uuid));
+  setStage(userId, stages.data[0].id, payload.timestamp);
+  //console.log('Stage: ', getStage(userId));
 
   return { status: '성공' };
 };
@@ -18,7 +18,7 @@ export const gameEnd = () => {
   // 클라이언트는 게임 종료 시 타임스탬프와 총 점수
   const { timestamp: gameEndTime, score } = payload;
 
-  const stages = getStage(uuid);
+  const stages = getStage(userId);
   if (!stages.length) {
     return { status: '실패', message: '유저의 스테이지를 찾을 수 없습니다.' };
   }
