@@ -1,7 +1,7 @@
 import { getGameAssets } from '../init/assets.js';
-import { getItemList } from '../models/item.model.js';
 import { getStage, setStage } from '../models/stage.model.js';
 import { TIME, TIME_GAP } from '../constants.js';
+import { calculateItemScore } from '../utils/calculate.js';
 
 export const moveStageHandler = (userId, payload) => {
   // 스테이지 단계별 상승
@@ -25,12 +25,10 @@ export const moveStageHandler = (userId, payload) => {
   // 현재 스테이지 검증
   const { stages, items } = getGameAssets();
   const currentStageData = stages.data.find((stage) => stage.id === payload.currentStage);
-  console.log('current', currentStageData);
   if (!currentStageData) return { status: '실패', message: '현재 스테이지를 찾을 수 없습니다.' };
 
   // 다음(목표) 스테이지 검증 < assets에 존재 여부
   const targetStageData = stages.data.find((stage) => stage.id === payload.targetStage);
-  console.log('target', targetStageData);
   if (!targetStageData) return { status: '실패', message: '다음 스테이지를 찾을 수 없습니다.' };
 
   // 서버 클라이언트 시간차 검증
@@ -42,15 +40,8 @@ export const moveStageHandler = (userId, payload) => {
     return { status: '실패', message: '클라이언트와 서버의 시간이 유효하지 않습니다.' };
 
   // 점수 검증
-  const userItemList = getItemList(userId);
-  let itemScore = 0;
-  for (const userItem of userItemList) {
-    const item = items.data.find((item) => item.id === userItem.itemId);
-    if (!item) {
-      return { status: '실패', message: '유효하지 않은 아이템이 포함되어 있습니다.' };
-    }
-    itemScore += item.score;
-  }
+  const itemScore = calculateItemScore(userId, items);
+
   // 다음 스테이지 목표 점수 = 다음 스테이지 점수 - 현재 스테이지 점수
   const elapsedTime = (serverTime - currentStage.timestamp) / TIME;
   const targetScore = targetStageData.score - currentStageData.score;
