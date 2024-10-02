@@ -65,7 +65,6 @@ class Score {
 
   setHighScore() {
     if (this.score > this.highScore) this.highScore = this.score;
-    console.log(this.highScore, this.score);
   }
 
   getScore() {

@@ -1,4 +1,5 @@
 import { CLIENT_VERSION } from './Constants.js';
+import Score from './Score.js';
 
 let userId = localStorage.getItem('userId') || '';
 // 연결 주소
@@ -19,6 +20,23 @@ socket.on('connection', (data) => {
   // 연결됐을 때 userId에 userUUID 저장
   userId = data.uuid;
   localStorage.setItem('userId', userId);
+});
+
+socket.on('getHighScore', (data) => {
+  const scoreInstance = Score.instance;
+  if (scoreInstance && data?.score) {
+    scoreInstance.highScore = data.score;
+  } else {
+    scoreInstance.highScore = 0;
+  }
+});
+
+// 최고 점수 이벤트 수신
+socket.on('highScore', (data) => {
+  const scoreInstance = Score.instance;
+  if (scoreInstance) {
+    scoreInstance.highScore = data.score;
+  }
 });
 
 const sendEvent = (handlerId, payload) => {
