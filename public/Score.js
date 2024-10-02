@@ -2,18 +2,25 @@ import { sendEvent } from './Socket.js';
 import { FIRST_STAGE_ID } from './Constants.js';
 
 class Score {
+  static instance = null;
   score = 0;
   HIGH_SCORE_KEY = 'highScore';
   stageChange = true;
   currentStageId = FIRST_STAGE_ID;
+  highScore = 0;
 
   constructor(ctx, scaleRatio, stageData, itemData, itemController) {
+    if (Score.instance) {
+      return Score.instance; // 이미 인스턴스가 있다면 그 인스턴스를 반환
+    }
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.scaleRatio = scaleRatio;
     this.stageData = stageData;
     this.itemData = itemData;
     this.itemController = itemController;
+
+    Score.instance = this;
   }
 
   update(deltaTime) {
@@ -57,10 +64,7 @@ class Score {
   }
 
   setHighScore() {
-    const highScore = Number(localStorage.getItem(this.HIGH_SCORE_KEY));
-    if (this.score > highScore) {
-      localStorage.setItem(this.HIGH_SCORE_KEY, Math.floor(this.score));
-    }
+    if (this.score > this.highScore) this.highScore = this.score;
   }
 
   getScore() {
@@ -69,7 +73,7 @@ class Score {
 
   draw() {
     const stage = this.currentStageId - 999;
-    const highScore = Number(localStorage.getItem(this.HIGH_SCORE_KEY));
+    const highScore = Math.floor(this.highScore);
     const y = 20 * this.scaleRatio;
 
     const fontSize = 20 * this.scaleRatio;
