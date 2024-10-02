@@ -24,7 +24,7 @@ export const handleConnection = async (socket, uuid) => {
   socket.emit('connection', { uuid });
 };
 
-export const handleEvent = (io, socket, data) => {
+export const handleEvent = async (io, socket, data) => {
   // 클라언트 버전 체크
   //if (!data.CLIENT_VERSION) throw new Error('클라이언트 버전이 존재하지 않습니다.');
   if (!CLIENT_VERSION.includes(data.clientVersion)) {
@@ -39,7 +39,7 @@ export const handleEvent = (io, socket, data) => {
     return;
   }
 
-  const response = handler(data.userId, data.payload);
+  const response = await handler(data.userId, data.payload, io);
 
   // 브로드캐스트시
   if (response.broadcast) {
