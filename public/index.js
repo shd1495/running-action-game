@@ -125,6 +125,15 @@ function showGameOver() {
   ctx.fillText('GAME OVER', x, y);
 }
 
+function showChangeStage() {
+  const fontSize = 70 * scaleRatio;
+  ctx.font = `${fontSize}px Verdana`;
+  ctx.fillStyle = 'grey';
+  const x = canvas.width / 3;
+  const y = canvas.height / 2;
+  ctx.fillText(`Stage ${score.currentStageId - 999}`, x, y);
+}
+
 function showStartGameText() {
   const fontSize = 40 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
@@ -219,6 +228,10 @@ function gameLoop(currentTime) {
 
   if (waitingToStart) {
     showStartGameText();
+  }
+
+  if (!score.stageChange) {
+    showChangeStage();
   }
 
   // 재귀 호출 (무한반복)

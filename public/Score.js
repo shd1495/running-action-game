@@ -46,10 +46,11 @@ class Score {
       this.currentStageId = nextStage.id;
       this.itemController.setCurrStage(this.currentStageId);
     }
-
-    if (Math.floor(this.score) < nextStage?.score) {
-      this.stageChange = true;
-    }
+    setTimeout(() => {
+      if (Math.floor(this.score) < nextStage?.score) {
+        this.stageChange = true;
+      }
+    }, 1000);
   }
 
   getItem(itemId) {
