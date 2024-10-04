@@ -216,7 +216,11 @@ function gameLoop(currentTime) {
 
   if (!gameover && cactiController.collideWith(player)) {
     gameover = true;
-    score.setHighScore();
+    const currentScore = score.score;
+    if (currentScore > score.highScore) {
+      score.isHighScore = true;
+      score.setHighScore();
+    }
     setupGameReset();
     sendEvent(3, { timestamp: Date.now(), score: score.score });
   }
@@ -234,10 +238,10 @@ function gameLoop(currentTime) {
 
   if (gameover && score.isHighScore) {
     showChangeHighScore();
-  }
-  if (gameover && !score.isHighScore) {
+  } else if (gameover) {
     showGameOver();
   }
+
   if (waitingToStart) {
     showStartGameText();
   }
