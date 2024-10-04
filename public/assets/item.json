@@ -2,29 +2,12 @@
   "name": "item",
   "version": "1.0.0",
   "data": [
-    { "width": 33, "height": 33, "id": 1, "score": 10, "image": "images/items/pokeball_red.png" },
-    {
-      "width": 33,
-      "height": 33,
-      "id": 2,
-      "score": 20,
-      "image": "images/items/pokeball_yellow.png"
-    },
-    {
-      "width": 33,
-      "height": 33,
-      "id": 3,
-      "score": 30,
-      "image": "images/items/pokeball_purple.png"
-    },
-    { "width": 33, "height": 33, "id": 4, "score": 40, "image": "images/items/pokeball_cyan.png" },
-    {
-      "width": 33,
-      "height": 33,
-      "id": 5,
-      "score": 50,
-      "image": "images/items/pokeball_pink.png"
-    },
-    { "width": 33, "height": 33, "id": 6, "score": 60, "image": "images/items/pokeball_orange.png" }
+    { "width": 30, "height": 30, "id": 1, "score": 10, "image": "images/items/apple.png" },
+    { "width": 30, "height": 30, "id": 2, "score": 20, "image": "images/items/tomato.png" },
+    { "width": 30, "height": 30, "id": 3, "score": 30, "image": "images/items/kiwi.png" },
+    { "width": 30, "height": 30, "id": 4, "score": 40, "image": "images/items/watermelon.png" },
+    { "width": 30, "height": 30, "id": 5, "score": 50, "image": "images/items/honey.png" },
+    { "width": 30, "height": 30, "id": 6, "score": 60, "image": "images/items/meet.png" },
+    { "width": 30, "height": 30, "id": 7, "score": 70, "image": "images/items/cake.png" }
   ]
 }

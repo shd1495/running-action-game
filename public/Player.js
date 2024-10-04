@@ -1,7 +1,7 @@
 class Player {
   WALK_ANIMATION_TIMER = 200;
   walkAnimationTimer = this.WALK_ANIMATION_TIMER;
-  dinoRunImages = [];
+  playerRunImages = [];
 
   //점프 상태값
   jumpPressed = false;
@@ -20,6 +20,8 @@ class Player {
     this.minJumpHeight = minJumpHeight;
     this.maxJumpHeight = maxJumpHeight;
     this.scaleRatio = scaleRatio;
+    this.jumpSound = new Audio('./sounds/playerJump.wav');
+    this.dieSound = new Audio('./sounds/playerDie.wav');
 
     this.x = 10 * scaleRatio;
     this.y = this.canvas.height - this.height - 1.5 * scaleRatio;
@@ -27,18 +29,22 @@ class Player {
     this.yStandingPosition = this.y;
 
     this.standingStillImage = new Image();
-    this.standingStillImage.src = 'images/standing_still.png';
+    this.standingStillImage.src = 'images/player_jump.png';
     this.image = this.standingStillImage;
 
     // 달리기
-    const dinoRunImage1 = new Image();
-    dinoRunImage1.src = 'images/dino_run1.png';
+    const playerRunImage1 = new Image();
+    playerRunImage1.src = 'images/player_run1.png';
 
-    const dinoRunImage2 = new Image();
-    dinoRunImage2.src = 'images/dino_run2.png';
+    const playerRunImage2 = new Image();
+    playerRunImage2.src = 'images/player_run2.png';
 
-    this.dinoRunImages.push(dinoRunImage1);
-    this.dinoRunImages.push(dinoRunImage2);
+    // 게임오버 이미지
+    this.playerDieImage = new Image();
+    this.playerDieImage.src = 'images/player_die.png';
+
+    this.playerRunImages.push(playerRunImage1);
+    this.playerRunImages.push(playerRunImage2);
 
     // 키보드 설정
     // 등록된 이벤트가 있는 경우 삭제하고 다시 등록
@@ -72,7 +78,8 @@ class Player {
   }
 
   jump(deltaTime) {
-    if (this.jumpPressed) {
+    if (this.jumpPressed && !this.jumpInProgress) {
+      this.jumpSound.play();
       this.jumpInProgress = true;
     }
 
@@ -106,15 +113,20 @@ class Player {
 
   run(gameSpeed, deltaTime) {
     if (this.walkAnimationTimer <= 0) {
-      if (this.image === this.dinoRunImages[0]) {
-        this.image = this.dinoRunImages[1];
+      if (this.image === this.playerRunImages[0]) {
+        this.image = this.playerRunImages[1];
       } else {
-        this.image = this.dinoRunImages[0];
+        this.image = this.playerRunImages[0];
       }
       this.walkAnimationTimer = this.WALK_ANIMATION_TIMER;
     }
 
     this.walkAnimationTimer -= deltaTime * gameSpeed;
+  }
+
+  die() {
+    this.image = this.playerDieImage;
+    this.dieSound.play();
   }
 
   draw() {
