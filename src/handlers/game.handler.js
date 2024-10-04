@@ -39,7 +39,7 @@ export const gameEnd = async (userId, payload, io) => {
       stageEndTime = stages[idx + 1].timestamp;
     }
     // 각 스테이지당 획득 점수로 수정 필요
-    const stageDuration = (stageEndTime - stage.timestamp) / 100;
+    const stageDuration = (stageEndTime - stage.timestamp) / 1000;
     const scorePerSecond = stageData.data.find(
       (stageData) => stageData.id === stage.id,
     ).scorePerSecond;

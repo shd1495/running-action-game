@@ -20,6 +20,7 @@ class Score {
     this.stageData = stageData;
     this.itemData = itemData;
     this.itemController = itemController;
+    this.itemGetSound = new Audio('./sounds/getItem.wav');
 
     Score.instance = this;
   }
@@ -31,7 +32,7 @@ class Score {
     const currStage = stages.find((stage) => stage.id === this.currentStageId);
     const nextStage = stages.find((stage) => stage.id === this.currentStageId + 1);
 
-    this.score += currStage.scorePerSecond * deltaTime * 0.01;
+    this.score += currStage.scorePerSecond * deltaTime * 0.001;
     // 점수가 100점 이상이 될 시 서버에 메세지 전송
     if (this.score >= nextStage?.score) {
       // 메시지
@@ -55,6 +56,7 @@ class Score {
   }
 
   getItem(itemId) {
+    this.itemGetSound.play();
     const item = this.itemData.find((item) => item.id == itemId);
     this.score += item.score || 0;
     if (item) sendEvent(12, { timestamp: Date.now(), itemId: itemId });
@@ -80,7 +82,7 @@ class Score {
 
     const fontSize = 20 * this.scaleRatio;
     this.ctx.font = `${fontSize}px serif`;
-    this.ctx.fillStyle = '#525250';
+    this.ctx.fillStyle = 'white';
 
     const scoreX = this.canvas.width - 75 * this.scaleRatio;
     const highScoreX = scoreX - 125 * this.scaleRatio;

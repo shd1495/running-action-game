@@ -21,15 +21,15 @@ export const MAX_JUMP_HEIGHT = GAME_HEIGHT;
 export const MIN_JUMP_HEIGHT = 150;
 
 // 땅
-export const GROUND_WIDTH = 2400;
-export const GROUND_HEIGHT = 24;
+export const GROUND_WIDTH = 1800;
+export const GROUND_HEIGHT = 200;
 export const GROUND_SPEED = 0.5;
 
 // 선인장
-export const CACTI_CONFIG = [
-  { width: 48 / 1.5, height: 100 / 1.5, image: 'images/cactus_1.png' },
-  { width: 98 / 1.5, height: 100 / 1.5, image: 'images/cactus_2.png' },
-  { width: 68 / 1.5, height: 70 / 1.5, image: 'images/cactus_3.png' },
+export const ENEMY_CONFIG = [
+  { width: 88 / 1.5, height: 100 / 1.5, image: 'images/banshee.png' },
+  { width: 98 / 1.5, height: 100 / 1.5, image: 'images/ghost.png' },
+  { width: 68 / 1.5, height: 70 / 1.5, image: 'images/skel.png' },
 ];
 
 // 아이템

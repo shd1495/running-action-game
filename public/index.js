@@ -1,6 +1,6 @@
 import Player from './Player.js';
 import Ground from './Ground.js';
-import CactiController from './CactiController.js';
+import EnemyController from './enemyController.js';
 import Score from './Score.js';
 import ItemController from './ItemController.js';
 import { sendEvent } from './Socket.js';
@@ -16,7 +16,7 @@ import {
   GROUND_WIDTH,
   GROUND_HEIGHT,
   GROUND_SPEED,
-  CACTI_CONFIG,
+  ENEMY_CONFIG,
   ITEM_CONFIG,
   STAGE_CONFIG,
   ITEM_UNLOCK,
@@ -28,7 +28,7 @@ const ctx = canvas.getContext('2d');
 // 게임 요소들
 let player = null;
 let ground = null;
-let cactiController = null;
+let enemyController = null;
 let itemController = null;
 let score = null;
 
@@ -38,6 +38,9 @@ let gameSpeed = GAME_SPEED_START;
 let gameover = false;
 let hasAddedEventListenersForRestart = false;
 let waitingToStart = true;
+
+let bgm = null;
+let bgmInitialized = false;
 
 function createSprites() {
   // 비율에 맞는 크기
@@ -62,17 +65,17 @@ function createSprites() {
 
   ground = new Ground(ctx, groundWidthInGame, groundHeightInGame, GROUND_SPEED, scaleRatio);
 
-  const cactiImages = CACTI_CONFIG.map((cactus) => {
+  const enemyImages = ENEMY_CONFIG.map((enemy) => {
     const image = new Image();
-    image.src = cactus.image;
+    image.src = enemy.image;
     return {
       image,
-      width: cactus.width * scaleRatio,
-      height: cactus.height * scaleRatio,
+      width: enemy.width * scaleRatio,
+      height: enemy.height * scaleRatio,
     };
   });
 
-  cactiController = new CactiController(ctx, cactiImages, scaleRatio, GROUND_SPEED);
+  enemyController = new EnemyController(ctx, enemyImages, scaleRatio, GROUND_SPEED);
 
   const itemImages = ITEM_CONFIG.map((item) => {
     const image = new Image();
@@ -89,6 +92,20 @@ function createSprites() {
 
   score = new Score(ctx, scaleRatio, STAGE_CONFIG, ITEM_CONFIG, itemController);
 }
+
+function initializeBGM() {
+  if (!bgmInitialized) {
+    bgm = new Audio('sounds/bgm.wav');
+    bgm.loop = true;
+    bgm.volume = 0.25;
+    bgm.play();
+    bgmInitialized = true;
+  }
+}
+
+// 유저가 문서와 상호작용할 때 BGM 실행
+window.addEventListener('click', initializeBGM);
+window.addEventListener('keydown', initializeBGM);
 
 function getScaleRatio() {
   const screenHeight = Math.min(window.innerHeight, document.documentElement.clientHeight);
@@ -119,7 +136,7 @@ if (screen.orientation) {
 function showGameOver() {
   const fontSize = 70 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
-  ctx.fillStyle = 'grey';
+  ctx.fillStyle = 'white';
   const x = canvas.width / 4.5;
   const y = canvas.height / 2;
   ctx.fillText('GAME OVER', x, y);
@@ -128,7 +145,7 @@ function showGameOver() {
 function showChangeStage() {
   const fontSize = 70 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
-  ctx.fillStyle = 'grey';
+  ctx.fillStyle = 'white';
   const x = canvas.width / 3;
   const y = canvas.height / 2;
   ctx.fillText(`Stage ${score.currentStageId - 999}`, x, y);
@@ -137,7 +154,7 @@ function showChangeStage() {
 function showChangeHighScore() {
   const fontSize = 30 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
-  ctx.fillStyle = 'grey';
+  ctx.fillStyle = 'white';
   const x = canvas.width / 16;
   const y = canvas.height / 2;
   ctx.fillText(`!Congratulation! you got the highest score! ${parseInt(score.score)}`, x, y);
@@ -146,7 +163,7 @@ function showChangeHighScore() {
 function showStartGameText() {
   const fontSize = 40 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
-  ctx.fillStyle = 'grey';
+  ctx.fillStyle = 'white';
   const x = canvas.width / 14;
   const y = canvas.height / 2;
   ctx.fillText('Tap Screen or Press Space To Start', x, y);
@@ -162,7 +179,7 @@ function reset() {
   waitingToStart = false;
 
   ground.reset();
-  cactiController.reset();
+  enemyController.reset();
   itemController.reset();
   score.reset();
   gameSpeed = GAME_SPEED_START;
@@ -205,7 +222,7 @@ function gameLoop(currentTime) {
     ground.update(gameSpeed, deltaTime);
     score.isHighScore = false;
     // 선인장
-    cactiController.update(gameSpeed, deltaTime);
+    enemyController.update(gameSpeed, deltaTime);
     itemController.update(gameSpeed, deltaTime);
     // 달리기
     player.update(gameSpeed, deltaTime);
@@ -214,13 +231,14 @@ function gameLoop(currentTime) {
     score.update(deltaTime);
   }
 
-  if (!gameover && cactiController.collideWith(player)) {
+  if (!gameover && enemyController.collideWith(player)) {
     gameover = true;
     const currentScore = score.score;
     if (currentScore > score.highScore) {
       score.isHighScore = true;
       score.setHighScore();
     }
+    player.die();
     setupGameReset();
     sendEvent(3, { timestamp: Date.now(), score: score.score });
   }
@@ -230,11 +248,11 @@ function gameLoop(currentTime) {
   }
 
   // draw
-  player.draw();
-  cactiController.draw();
   ground.draw();
-  score.draw();
+  player.draw();
+  enemyController.draw();
   itemController.draw();
+  score.draw();
 
   if (gameover && score.isHighScore) {
     showChangeHighScore();
