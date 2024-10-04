@@ -2,6 +2,7 @@ import Item from './Item.js';
 import { FIRST_STAGE_ID } from './Constants.js';
 
 class ItemController {
+  static instance = null;
   INTERVAL = 3000;
 
   nextInterval = null;
@@ -9,6 +10,9 @@ class ItemController {
   currentStage = FIRST_STAGE_ID;
 
   constructor(ctx, itemImages, scaleRatio, speed, itemUnlockData) {
+    if (ItemController.instance) {
+      return ItemController.instance; // 이미 인스턴스가 있다면 그 인스턴스를 반환
+    }
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.itemImages = itemImages;
@@ -17,6 +21,7 @@ class ItemController {
     this.itemUnlockData = itemUnlockData;
 
     this.setNextItemTime();
+    ItemController.instance = this;
   }
 
   setNextItemTime() {
@@ -32,6 +37,10 @@ class ItemController {
     const itemTable = this.itemUnlockData.find((item) => this.currentStage === item.stageId);
     const index = this.getRandomNumber(0, itemTable?.itemId.length - 1);
     const itemInfo = this.itemImages[index];
+    console.log(this.currentStage);
+    console.log('itemTable: ', itemTable);
+    console.log('index:', index);
+    console.log('itemInfo:', itemInfo);
     const x = this.canvas.width * 1.5;
     const y = this.getRandomNumber(10, this.canvas.height - itemInfo.height);
 

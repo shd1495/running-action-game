@@ -63,7 +63,7 @@ export const gameEnd = async (userId, payload, io) => {
   if (!highScore || !highScore.score || totalScore > highScore.score) {
     await setHighScore(userId, totalScore);
 
-    io.emit('highScore', { uuid: userId, score: totalScore });
+    io.emit('highScore', { uuid: userId, score: score });
   }
 
   return { status: '성공', message: '게임 끝', score: parseInt(score) };

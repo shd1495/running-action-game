@@ -179,8 +179,8 @@ function reset() {
   waitingToStart = false;
 
   ground.reset();
-  enemyController.reset();
   itemController.reset();
+  enemyController.reset();
   score.reset();
   gameSpeed = GAME_SPEED_START;
   // 게임시작 핸들러ID 2, payload 에는 게임 시작 시간
@@ -217,10 +217,10 @@ function gameLoop(currentTime) {
   clearScreen();
 
   if (!gameover && !waitingToStart) {
+    score.isHighScore = false;
     // update
     // 땅이 움직임
     ground.update(gameSpeed, deltaTime);
-    score.isHighScore = false;
     // 선인장
     enemyController.update(gameSpeed, deltaTime);
     itemController.update(gameSpeed, deltaTime);
