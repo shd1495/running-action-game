@@ -37,10 +37,6 @@ class ItemController {
     const itemTable = this.itemUnlockData.find((item) => this.currentStage === item.stageId);
     const index = this.getRandomNumber(0, itemTable?.itemId.length - 1);
     const itemInfo = this.itemImages[index];
-    console.log(this.currentStage);
-    console.log('itemTable: ', itemTable);
-    console.log('index:', index);
-    console.log('itemInfo:', itemInfo);
     const x = this.canvas.width * 1.5;
     const y = this.getRandomNumber(10, this.canvas.height - itemInfo.height);
 
