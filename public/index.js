@@ -1,51 +1,34 @@
 import Player from './Player.js';
 import Ground from './Ground.js';
-import CactiController from './CactiController.js';
+import EnemyController from './enemyController.js';
 import Score from './Score.js';
 import ItemController from './ItemController.js';
 import { sendEvent } from './Socket.js';
+import {
+  GAME_SPEED_START,
+  GAME_SPEED_INCREMENT,
+  GAME_WIDTH,
+  GAME_HEIGHT,
+  PLAYER_WIDTH,
+  PLAYER_HEIGHT,
+  MAX_JUMP_HEIGHT,
+  MIN_JUMP_HEIGHT,
+  GROUND_WIDTH,
+  GROUND_HEIGHT,
+  GROUND_SPEED,
+  ENEMY_CONFIG,
+  ITEM_CONFIG,
+  STAGE_CONFIG,
+  ITEM_UNLOCK,
+} from './Constants.js';
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
-const GAME_SPEED_START = 1;
-const GAME_SPEED_INCREMENT = 0.00001;
-
-// 게임 크기
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 200;
-
-// 플레이어
-// 800 * 200 사이즈의 캔버스에서는 이미지의 기본크기가 크기때문에 1.5로 나눈 값을 사용. (비율 유지)
-const PLAYER_WIDTH = 88 / 1.5; // 58
-const PLAYER_HEIGHT = 94 / 1.5; // 62
-const MAX_JUMP_HEIGHT = GAME_HEIGHT;
-const MIN_JUMP_HEIGHT = 150;
-
-// 땅
-const GROUND_WIDTH = 2400;
-const GROUND_HEIGHT = 24;
-const GROUND_SPEED = 0.5;
-
-// 선인장
-const CACTI_CONFIG = [
-  { width: 48 / 1.5, height: 100 / 1.5, image: 'images/cactus_1.png' },
-  { width: 98 / 1.5, height: 100 / 1.5, image: 'images/cactus_2.png' },
-  { width: 68 / 1.5, height: 70 / 1.5, image: 'images/cactus_3.png' },
-];
-
-// 아이템
-const ITEM_CONFIG = [
-  { width: 50 / 1.5, height: 50 / 1.5, id: 1, image: 'images/items/pokeball_red.png' },
-  { width: 50 / 1.5, height: 50 / 1.5, id: 2, image: 'images/items/pokeball_yellow.png' },
-  { width: 50 / 1.5, height: 50 / 1.5, id: 3, image: 'images/items/pokeball_purple.png' },
-  { width: 50 / 1.5, height: 50 / 1.5, id: 4, image: 'images/items/pokeball_cyan.png' },
-];
-
 // 게임 요소들
 let player = null;
 let ground = null;
-let cactiController = null;
+let enemyController = null;
 let itemController = null;
 let score = null;
 
@@ -55,6 +38,9 @@ let gameSpeed = GAME_SPEED_START;
 let gameover = false;
 let hasAddedEventListenersForRestart = false;
 let waitingToStart = true;
+
+let bgm = null;
+let bgmInitialized = false;
 
 function createSprites() {
   // 비율에 맞는 크기
@@ -79,17 +65,17 @@ function createSprites() {
 
   ground = new Ground(ctx, groundWidthInGame, groundHeightInGame, GROUND_SPEED, scaleRatio);
 
-  const cactiImages = CACTI_CONFIG.map((cactus) => {
+  const enemyImages = ENEMY_CONFIG.map((enemy) => {
     const image = new Image();
-    image.src = cactus.image;
+    image.src = enemy.image;
     return {
       image,
-      width: cactus.width * scaleRatio,
-      height: cactus.height * scaleRatio,
+      width: enemy.width * scaleRatio,
+      height: enemy.height * scaleRatio,
     };
   });
 
-  cactiController = new CactiController(ctx, cactiImages, scaleRatio, GROUND_SPEED);
+  enemyController = new EnemyController(ctx, enemyImages, scaleRatio, GROUND_SPEED);
 
   const itemImages = ITEM_CONFIG.map((item) => {
     const image = new Image();
@@ -102,10 +88,24 @@ function createSprites() {
     };
   });
 
-  itemController = new ItemController(ctx, itemImages, scaleRatio, GROUND_SPEED);
+  itemController = new ItemController(ctx, itemImages, scaleRatio, GROUND_SPEED, ITEM_UNLOCK);
 
-  score = new Score(ctx, scaleRatio);
+  score = new Score(ctx, scaleRatio, STAGE_CONFIG, ITEM_CONFIG, itemController);
 }
+
+function initializeBGM() {
+  if (!bgmInitialized) {
+    bgm = new Audio('sounds/bgm.wav');
+    bgm.loop = true;
+    bgm.volume = 0.25;
+    bgm.play();
+    bgmInitialized = true;
+  }
+}
+
+// 유저가 문서와 상호작용할 때 BGM 실행
+window.addEventListener('click', initializeBGM);
+window.addEventListener('keydown', initializeBGM);
 
 function getScaleRatio() {
   const screenHeight = Math.min(window.innerHeight, document.documentElement.clientHeight);
@@ -136,16 +136,34 @@ if (screen.orientation) {
 function showGameOver() {
   const fontSize = 70 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
-  ctx.fillStyle = 'grey';
+  ctx.fillStyle = 'white';
   const x = canvas.width / 4.5;
   const y = canvas.height / 2;
   ctx.fillText('GAME OVER', x, y);
 }
 
+function showChangeStage() {
+  const fontSize = 70 * scaleRatio;
+  ctx.font = `${fontSize}px Verdana`;
+  ctx.fillStyle = 'white';
+  const x = canvas.width / 3;
+  const y = canvas.height / 2;
+  ctx.fillText(`Stage ${score.currentStageId - 999}`, x, y);
+}
+
+function showChangeHighScore() {
+  const fontSize = 30 * scaleRatio;
+  ctx.font = `${fontSize}px Verdana`;
+  ctx.fillStyle = 'white';
+  const x = canvas.width / 16;
+  const y = canvas.height / 2;
+  ctx.fillText(`!Congratulation! you got the highest score! ${parseInt(score.score)}`, x, y);
+}
+
 function showStartGameText() {
   const fontSize = 40 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
-  ctx.fillStyle = 'grey';
+  ctx.fillStyle = 'white';
   const x = canvas.width / 14;
   const y = canvas.height / 2;
   ctx.fillText('Tap Screen or Press Space To Start', x, y);
@@ -161,7 +179,8 @@ function reset() {
   waitingToStart = false;
 
   ground.reset();
-  cactiController.reset();
+  enemyController.reset();
+  itemController.reset();
   score.reset();
   gameSpeed = GAME_SPEED_START;
   // 게임시작 핸들러ID 2, payload 에는 게임 시작 시간
@@ -201,8 +220,9 @@ function gameLoop(currentTime) {
     // update
     // 땅이 움직임
     ground.update(gameSpeed, deltaTime);
+    score.isHighScore = false;
     // 선인장
-    cactiController.update(gameSpeed, deltaTime);
+    enemyController.update(gameSpeed, deltaTime);
     itemController.update(gameSpeed, deltaTime);
     // 달리기
     player.update(gameSpeed, deltaTime);
@@ -211,10 +231,16 @@ function gameLoop(currentTime) {
     score.update(deltaTime);
   }
 
-  if (!gameover && cactiController.collideWith(player)) {
+  if (!gameover && enemyController.collideWith(player)) {
     gameover = true;
-    score.setHighScore();
+    const currentScore = score.score;
+    if (currentScore > score.highScore) {
+      score.isHighScore = true;
+      score.setHighScore();
+    }
+    player.die();
     setupGameReset();
+    sendEvent(3, { timestamp: Date.now(), score: score.score });
   }
   const collideWithItem = itemController.collideWith(player);
   if (collideWithItem && collideWithItem.itemId) {
@@ -222,18 +248,24 @@ function gameLoop(currentTime) {
   }
 
   // draw
-  player.draw();
-  cactiController.draw();
   ground.draw();
-  score.draw();
+  player.draw();
+  enemyController.draw();
   itemController.draw();
+  score.draw();
 
-  if (gameover) {
+  if (gameover && score.isHighScore) {
+    showChangeHighScore();
+  } else if (gameover) {
     showGameOver();
   }
 
   if (waitingToStart) {
     showStartGameText();
+  }
+
+  if (!score.stageChange) {
+    showChangeStage();
   }
 
   // 재귀 호출 (무한반복)
