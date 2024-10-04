@@ -134,6 +134,15 @@ function showChangeStage() {
   ctx.fillText(`Stage ${score.currentStageId - 999}`, x, y);
 }
 
+function showChangeHighScore() {
+  const fontSize = 30 * scaleRatio;
+  ctx.font = `${fontSize}px Verdana`;
+  ctx.fillStyle = 'grey';
+  const x = canvas.width / 16;
+  const y = canvas.height / 2;
+  ctx.fillText(`!Congratulation! you got the highest score! ${parseInt(score.score)}`, x, y);
+}
+
 function showStartGameText() {
   const fontSize = 40 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
@@ -194,6 +203,7 @@ function gameLoop(currentTime) {
     // update
     // 땅이 움직임
     ground.update(gameSpeed, deltaTime);
+    score.isHighScore = false;
     // 선인장
     cactiController.update(gameSpeed, deltaTime);
     itemController.update(gameSpeed, deltaTime);
@@ -222,10 +232,12 @@ function gameLoop(currentTime) {
   score.draw();
   itemController.draw();
 
-  if (gameover) {
+  if (gameover && score.isHighScore) {
+    showChangeHighScore();
+  }
+  if (gameover && !score.isHighScore) {
     showGameOver();
   }
-
   if (waitingToStart) {
     showStartGameText();
   }

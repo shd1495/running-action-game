@@ -33,9 +33,11 @@ socket.on('getHighScore', (data) => {
 
 // 최고 점수 이벤트 수신
 socket.on('highScore', (data) => {
+  console.log(`${data.uuid} 님이 ${parseInt(data.score)}점을 기록하여 최고 점수를 달성했습니다.`);
   const scoreInstance = Score.instance;
   if (scoreInstance) {
     scoreInstance.highScore = data.score;
+    scoreInstance.isHighScore = true;
   }
 });
 
