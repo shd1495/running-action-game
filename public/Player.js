@@ -9,7 +9,8 @@ class Player {
   falling = false;
 
   JUMP_SPEED = 0.6;
-  GRAVITY = 0.4;
+  GRAVITY = 0.02;
+  fallSpeed = 0;
 
   // 생성자
   constructor(ctx, width, height, minJumpHeight, maxJumpHeight, scaleRatio) {
@@ -23,7 +24,7 @@ class Player {
     this.jumpSound = new Audio('./sounds/playerJump.wav');
     this.dieSound = new Audio('./sounds/playerDie.wav');
 
-    this.x = 10 * scaleRatio;
+    this.x = 40 * scaleRatio;
     this.y = this.canvas.height - this.height - 1.5 * scaleRatio;
     // 기본 위치 상수화
     this.yStandingPosition = this.y;
@@ -98,11 +99,13 @@ class Player {
       // 떨어질 때
     } else {
       if (this.y < this.yStandingPosition) {
-        this.y += this.GRAVITY * deltaTime * this.scaleRatio;
+        this.fallSpeed += this.GRAVITY * deltaTime;
+        this.y += this.fallSpeed * this.scaleRatio;
 
         // 혹시 위치가 어긋 났을때 원래 위치로
         if (this.y + this.height > this.canvas.height) {
           this.y = this.yStandingPosition;
+          this.fallSpeed = 0;
         }
       } else {
         this.falling = false;
