@@ -8,6 +8,7 @@ class Score {
   stageChange = true;
   currentStageId = FIRST_STAGE_ID;
   highScore = 0;
+  isHighScore = false;
 
   constructor(ctx, scaleRatio, stageData, itemData, itemController) {
     if (Score.instance) {
