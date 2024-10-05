@@ -11,6 +11,10 @@ const socket = io('http://localhost:3030', {
   },
 });
 
+socket.on('highestRecordUser', (data) => {
+  console.log(`최고 기록 보유자 ${data.uuid}님 환영합니다.`);
+});
+
 socket.on('response', (data) => {
   console.log(data);
 });

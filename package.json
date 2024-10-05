@@ -17,5 +17,7 @@
   "devDependencies": {
     "nodemon": "^3.1.7",
     "prettier": "^3.3.3"
-  }
+  },
+  "repository": "https://github.com/shd1495/running-action-game.git",
+  "author": "박지영 <124862122+shd1495@users.noreply.github.com>"
 }
