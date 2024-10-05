@@ -9,7 +9,7 @@ class Player {
   falling = false;
 
   JUMP_SPEED = 0.6;
-  GRAVITY = 0.02;
+  GRAVITY = 0.1;
   fallSpeed = 0;
 
   // 생성자
@@ -99,7 +99,9 @@ class Player {
       // 떨어질 때
     } else {
       if (this.y < this.yStandingPosition) {
-        this.fallSpeed += this.GRAVITY * deltaTime;
+        this.fallSpeed += this.GRAVITY * deltaTime * 0.3;
+        console.log(this.fallSpeed);
+        this.fallSpeed = Math.min(this.fallSpeed, 10);
         this.y += this.fallSpeed * this.scaleRatio;
 
         // 혹시 위치가 어긋 났을때 원래 위치로
@@ -110,6 +112,7 @@ class Player {
       } else {
         this.falling = false;
         this.jumpInProgress = false;
+        this.fallSpeed = 0;
       }
     }
   }
