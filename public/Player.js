@@ -11,6 +11,8 @@ class Player {
   JUMP_SPEED = 0.6;
   GRAVITY = 0.1;
   fallSpeed = 0;
+  COOL_TIME = 75;
+  jumpCoolTime = 0;
 
   // 생성자
   constructor(ctx, width, height, minJumpHeight, maxJumpHeight, scaleRatio) {
@@ -75,11 +77,16 @@ class Player {
       this.image = this.standingStillImage;
     }
 
+    console.log(this.jumpCoolTime);
     this.jump(deltaTime);
+    if (this.jumpCoolTime > 0) {
+      this.jumpCoolTime -= deltaTime;
+      if (this.jumpCoolTime < 0) this.jumpCoolTime = 0;
+    }
   }
 
   jump(deltaTime) {
-    if (this.jumpPressed && !this.jumpInProgress) {
+    if (this.jumpPressed && !this.jumpInProgress && this.jumpCoolTime <= 0) {
       this.jumpSound.play();
       this.jumpInProgress = true;
     }
@@ -99,9 +106,8 @@ class Player {
       // 떨어질 때
     } else {
       if (this.y < this.yStandingPosition) {
-        this.fallSpeed += this.GRAVITY * deltaTime * 0.3;
-        console.log(this.fallSpeed);
-        this.fallSpeed = Math.min(this.fallSpeed, 10);
+        this.fallSpeed += this.GRAVITY * deltaTime * 0.2;
+        this.fallSpeed = Math.min(this.fallSpeed, 6);
         this.y += this.fallSpeed * this.scaleRatio;
 
         // 혹시 위치가 어긋 났을때 원래 위치로
@@ -109,6 +115,7 @@ class Player {
           this.y = this.yStandingPosition;
           this.fallSpeed = 0;
         }
+        this.jumpCoolTime = this.COOL_TIME;
       } else {
         this.falling = false;
         this.jumpInProgress = false;
