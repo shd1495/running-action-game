@@ -1,10 +1,13 @@
 import { CLIENT_VERSION } from '../constants.js';
-import { createStage } from '../models/stage.model.js';
+import { clearItem } from '../models/item.model.js';
+import { clearStage } from '../models/stage.model.js';
 import { getUsers, removeUser } from '../models/user.model.js';
 import handlerMappings from './handlerMapping.js';
 
 export const handleDisconnect = async (socket, uuid) => {
-  await removeUser(uuid);
+  removeUser(uuid);
+  clearStage(uuid);
+  clearItem(uuid);
   console.log(`${uuid} 유저가 연결을 해제했습니다`);
   console.log('현재 접속 중인 유저들:', await getUsers());
 };
@@ -17,7 +20,7 @@ export const handleConnection = async (socket, uuid) => {
   console.log('새로운 유저가 연결되었습니다.', 'uuid: ', uuid, 'socketId: ', socket.id);
   console.log('현재 접속 중인 유저들:', await getUsers());
 
-  createStage(uuid);
+  clearStage(uuid);
 
   // 클라이언트 버전 체크 추가 필요
 

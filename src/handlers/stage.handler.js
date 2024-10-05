@@ -3,13 +3,13 @@ import { getStage, setStage } from '../models/stage.model.js';
 import { TIME, TIME_GAP } from '../constants.js';
 import { calculateItemScore } from '../utils/calculate.js';
 
-export const moveStageHandler = (userId, payload) => {
+export const moveStageHandler = async (userId, payload) => {
   // 스테이지 단계별 상승
   // 일정 점수를 넘으면 다음 스테이지
 
   // payload -> 현재 스테이지(currentStages), 다음 스테이지(targetStages)
   // 유저의 현재 스테이지 정보
-  let currentStages = getStage(userId);
+  let currentStages = await getStage(userId);
   if (!currentStages.length)
     return { status: '실패', message: '유저의 현재 스테이지를 찾을 수 없습니다.' };
 
@@ -49,7 +49,7 @@ export const moveStageHandler = (userId, payload) => {
   if (targetScore > totalScore)
     return { status: '실패', message: '유효하지 않은 경과 시간입니다.' };
 
-  setStage(userId, payload.targetStage, serverTime);
+  await setStage(userId, payload.targetStage, serverTime);
 
   return { status: '성공' };
 };

@@ -22,7 +22,7 @@ export const gameEnd = async (userId, payload, io) => {
   // 클라이언트는 게임 종료 시 타임스탬프와 총 점수
   const { timestamp: gameEndTime, score } = payload;
 
-  const stages = getStage(userId);
+  const stages = await getStage(userId);
   if (!stages.length) {
     return { status: '실패', message: '유저의 스테이지를 찾을 수 없습니다.' };
   }
@@ -47,7 +47,7 @@ export const gameEnd = async (userId, payload, io) => {
   });
 
   // 아이템 점수 검증
-  const itemScore = calculateItemScore(userId, items);
+  const itemScore = await calculateItemScore(userId, items);
 
   // 점수와 타임스탬프 검증
   // 오차 범위 5
@@ -61,7 +61,7 @@ export const gameEnd = async (userId, payload, io) => {
 
   // 최고 점수 갱신시 브로드캐스트
   if (!highScore || !highScore.score || totalScore > highScore.score) {
-    await setHighScore(userId, totalScore);
+    await setHighScore(userId, score);
 
     io.emit('highScore', { uuid: userId, score: score });
   }

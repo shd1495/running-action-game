@@ -1,9 +1,9 @@
 import { getItemList } from '../models/item.model.js';
 
-export function calculateItemScore(userId, items) {
+export async function calculateItemScore(userId, items) {
   // 아이템 점수 검증
   let score = 0;
-  const userItemList = getItemList(userId);
+  const userItemList = await getItemList(userId);
   for (const userItem of userItemList) {
     const item = items.data.find((item) => item.id === userItem.itemId);
     if (!item) {

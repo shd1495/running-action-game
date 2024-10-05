@@ -23,6 +23,6 @@ export const getHighScore = async () => {
     }
     return null; // 점수가 없으면 null 반환
   } catch (error) {
-    throw new Error('최고 점수를 조회하는 중 오류가 발생했습니다: ' + error.message);
+    throw new Error('최고 점수를 조회하는 중 오류가 발생했습니다. ' + error.message);
   }
 };

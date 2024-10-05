@@ -13,11 +13,11 @@ export const addUser = async (user) => {
 };
 
 // 유저 접속 해제시
-export const removeUser = async (uuid) => {
+export const removeUser = (uuid) => {
   try {
-    await redisClient.del(uuid);
+    redisClient.del(uuid);
     // 유저 UUID를 세트에서 제거
-    await redisClient.srem(USER_SET, uuid);
+    redisClient.srem(USER_SET, uuid);
   } catch (error) {
     throw new Error('유저 정보를 삭제하는 중 에러가 발생했습니다.' + error.message);
   }
@@ -39,6 +39,10 @@ export const getUsers = async () => {
 };
 
 export const getUser = async (uuid) => {
-  const user = await redisClient.get(uuid);
-  return user ? JSON.parse(user) : null;
+  try {
+    const user = await redisClient.get(uuid);
+    return user ? JSON.parse(user) : null;
+  } catch (error) {
+    throw new Error('유저 정보를 불러오는 중 오류가 발생했습니다.' + error.message);
+  }
 };
