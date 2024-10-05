@@ -77,7 +77,6 @@ class Player {
       this.image = this.standingStillImage;
     }
 
-    console.log(this.jumpCoolTime);
     this.jump(deltaTime);
     if (this.jumpCoolTime > 0) {
       this.jumpCoolTime -= deltaTime;
