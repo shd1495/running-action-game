@@ -2,6 +2,7 @@ import { CLIENT_VERSION } from '../constants.js';
 import { clearItem } from '../models/item.model.js';
 import { clearStage } from '../models/stage.model.js';
 import { getUsers, removeUser } from '../models/user.model.js';
+import { getHighScore } from '../models/score.model.js';
 import handlerMappings from './handlerMapping.js';
 
 export const handleDisconnect = async (socket, uuid) => {
@@ -19,6 +20,14 @@ export const handleDisconnect = async (socket, uuid) => {
 export const handleConnection = async (socket, uuid) => {
   console.log('새로운 유저가 연결되었습니다.', 'uuid: ', uuid, 'socketId: ', socket.id);
   console.log('현재 접속 중인 유저들:', await getUsers());
+
+  // 최고 점수를 가져와 클라이언트로 전달
+  const highScore = await getHighScore();
+  socket.emit('getHighScore', highScore);
+
+  if (uuid == highScore?.uuid) {
+    socket.emit('highestRecordUser', { uuid });
+  }
 
   clearStage(uuid);
 

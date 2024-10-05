@@ -40,7 +40,7 @@ export const moveStageHandler = async (userId, payload) => {
     return { status: '실패', message: '클라이언트와 서버의 시간이 유효하지 않습니다.' };
 
   // 점수 검증
-  const itemScore = calculateItemScore(userId, items);
+  const itemScore = await calculateItemScore(userId, items);
 
   // 다음 스테이지 목표 점수 = 다음 스테이지 점수 - 현재 스테이지 점수
   const elapsedTime = (serverTime - currentStage.timestamp) / TIME;
@@ -51,5 +51,8 @@ export const moveStageHandler = async (userId, payload) => {
 
   await setStage(userId, payload.targetStage, serverTime);
 
-  return { status: '성공' };
+  return {
+    status: '성공',
+    message: `스테이지 이동에 성공했습니다. 현재 ${payload.targetStage - 999}스테이지 입니다.`,
+  };
 };

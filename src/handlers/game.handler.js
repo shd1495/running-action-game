@@ -14,7 +14,7 @@ export const gameStart = (userId, payload) => {
   setStage(userId, stages.data[0].id, payload.timestamp);
   //console.log('Stage: ', getStage(userId));
 
-  return { status: '성공' };
+  return { status: '성공', message: '게임 시작' };
 };
 
 export const gameEnd = async (userId, payload, io) => {

@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { handleConnection, handleDisconnect, handleEvent } from './helper.js';
 import { addUser, getUser } from '../models/user.model.js';
-import { getHighScore } from '../models/score.model.js';
 
 const registerHandler = (io) => {
   // 유저 접속시 (대기하는 함수)
@@ -23,14 +22,6 @@ const registerHandler = (io) => {
     // 유저 등록
     await addUser(user);
     handleConnection(socket, user.uuid);
-
-    // 최고 점수를 가져와 클라이언트로 전달
-    const highScore = await getHighScore();
-    socket.emit('getHighScore', highScore);
-
-    if (user.uuid == highScore?.uuid) {
-      socket.emit('highestRecordUser', { uuid: user.uuid });
-    }
 
     // 이벤트 처리
     socket.on('event', (data) => handleEvent(io, socket, data));
