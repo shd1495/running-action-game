@@ -1,5 +1,5 @@
-import { CLIENT_VERSION } from './Constants.js';
-import Score from './Score.js';
+import { CLIENT_VERSION } from './utils/Constants.js';
+import Score from './components/score/Score.js';
 
 let userId = localStorage.getItem('userId') || '';
 // 연결 주소

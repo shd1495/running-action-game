@@ -1,5 +1,5 @@
-import { sendEvent } from './Socket.js';
-import { FIRST_STAGE_ID } from './Constants.js';
+import { sendEvent } from '../../Socket.js';
+import { FIRST_STAGE_ID } from '../../utils/Constants.js';
 
 class Score {
   static instance = null;
@@ -20,7 +20,7 @@ class Score {
     this.stageData = stageData;
     this.itemData = itemData;
     this.itemController = itemController;
-    this.itemGetSound = new Audio('./sounds/getItem.wav');
+    this.itemGetSound = new Audio('../assets/sounds/getItem.wav');
     this.ground = ground;
 
     Score.instance = this;

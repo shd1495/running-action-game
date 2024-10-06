@@ -1,9 +1,9 @@
-import Player from './Player.js';
-import Ground from './Ground.js';
-import EnemyController from './enemyController.js';
-import Score from './Score.js';
-import ItemController from './ItemController.js';
-import { sendEvent } from './Socket.js';
+import Player from '../components/player/Player.js';
+import Ground from '../components/ground/Ground.js';
+import EnemyController from '../components/enemy/EnemyController.js';
+import Score from '../components/score/Score.js';
+import ItemController from '../components/items/ItemController.js';
+import { sendEvent } from '../Socket.js';
 import {
   GAME_SPEED_START,
   GAME_SPEED_INCREMENT,
@@ -20,7 +20,7 @@ import {
   ITEM_CONFIG,
   STAGE_CONFIG,
   ITEM_UNLOCK,
-} from './Constants.js';
+} from '../utils/Constants.js';
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
@@ -102,7 +102,7 @@ function createSprites() {
 
 function initializeBGM() {
   if (!bgmInitialized) {
-    bgm = new Audio('sounds/bgm.wav');
+    bgm = new Audio('../assets/sounds/bgm.wav');
     bgm.loop = true;
     bgm.volume = 0.25;
     bgm.play();

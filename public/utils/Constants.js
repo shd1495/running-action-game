@@ -1,6 +1,6 @@
-import item from './assets/item.json' with { type: 'json' };
-import itemUnlock from './assets/item_unlock.json' with { type: 'json' };
-import stage from './assets/stage.json' with { type: 'json' };
+import item from '../assets/dataTables/item.json' with { type: 'json' };
+import itemUnlock from '../assets/dataTables/item_unlock.json' with { type: 'json' };
+import stage from '../assets/dataTables/stage.json' with { type: 'json' };
 
 export const CLIENT_VERSION = '1.0.0';
 
@@ -27,9 +27,9 @@ export const GROUND_SPEED = 0.5;
 
 // 선인장
 export const ENEMY_CONFIG = [
-  { width: 88 / 1.5, height: 100 / 1.5, image: 'images/banshee.png' },
-  { width: 98 / 1.5, height: 100 / 1.5, image: 'images/ghost.png' },
-  { width: 68 / 1.5, height: 70 / 1.5, image: 'images/skel.png' },
+  { width: 88 / 1.5, height: 100 / 1.5, image: '../assets/images/banshee.png' },
+  { width: 98 / 1.5, height: 100 / 1.5, image: '../assets/images/ghost.png' },
+  { width: 68 / 1.5, height: 70 / 1.5, image: '../assets/images/skel.png' },
 ];
 
 // 아이템

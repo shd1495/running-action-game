@@ -25,8 +25,8 @@ class Player {
     this.minJumpHeight = minJumpHeight;
     this.maxJumpHeight = maxJumpHeight;
     this.scaleRatio = scaleRatio;
-    this.jumpSound = new Audio('./sounds/playerJump.wav');
-    this.dieSound = new Audio('./sounds/playerDie.wav');
+    this.jumpSound = new Audio('../../assets/sounds/playerJump.wav');
+    this.dieSound = new Audio('../../assets/sounds/playerDie.wav');
 
     this.x = 40 * scaleRatio;
     this.y = this.canvas.height - this.height - 1.5 * scaleRatio;
@@ -34,19 +34,19 @@ class Player {
     this.yStandingPosition = this.y;
 
     this.standingStillImage = new Image();
-    this.standingStillImage.src = 'images/player_jump.png';
+    this.standingStillImage.src = '../../assets/images/player_jump.png';
     this.image = this.standingStillImage;
 
     // 달리기
     const playerRunImage1 = new Image();
-    playerRunImage1.src = 'images/player_run1.png';
+    playerRunImage1.src = '../../assets/images/player_run1.png';
 
     const playerRunImage2 = new Image();
-    playerRunImage2.src = 'images/player_run2.png';
+    playerRunImage2.src = '../../assets/images/player_run2.png';
 
     // 게임오버 이미지
     this.playerDieImage = new Image();
-    this.playerDieImage.src = 'images/player_die.png';
+    this.playerDieImage.src = '../../assets/images/player_die.png';
 
     this.playerRunImages.push(playerRunImage1);
     this.playerRunImages.push(playerRunImage2);

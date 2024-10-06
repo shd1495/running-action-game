@@ -1,5 +1,5 @@
 import Item from './Item.js';
-import { FIRST_STAGE_ID } from './Constants.js';
+import { FIRST_STAGE_ID } from '../../utils/Constants.js';
 
 class ItemController {
   static instance = null;

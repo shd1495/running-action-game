@@ -1,4 +1,4 @@
-import Enemy from './enemy.js';
+import Enemy from './Enemy.js';
 
 class EnemyController {
   CACTUS_INTERVAL_MIN = 500;

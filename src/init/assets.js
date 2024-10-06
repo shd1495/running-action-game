@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const basePath = path.join(__dirname, '../../public/assets');
+const basePath = path.join(__dirname, '../../public/assets/dataTables');
 
 // 파일 읽는 함수
 // 비동기 병렬로 파일을 읽는다

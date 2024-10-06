@@ -1,0 +1,43 @@
+{
+  "name": "item",
+  "version": "1.0.0",
+  "data": [
+    {
+      "width": 30,
+      "height": 30,
+      "id": 1,
+      "score": 10,
+      "image": "../assets/images/items/apple.png"
+    },
+    {
+      "width": 30,
+      "height": 30,
+      "id": 2,
+      "score": 25,
+      "image": "../assets/images/items/tomato.png"
+    },
+    { "width": 30, "height": 30, "id": 3, "score": 50, "image": "../assets/images/items/kiwi.png" },
+    {
+      "width": 30,
+      "height": 30,
+      "id": 4,
+      "score": 100,
+      "image": "../assets/images/items/watermelon.png"
+    },
+    {
+      "width": 30,
+      "height": 30,
+      "id": 5,
+      "score": 150,
+      "image": "../assets/images/items/honey.png"
+    },
+    {
+      "width": 30,
+      "height": 30,
+      "id": 6,
+      "score": 250,
+      "image": "../assets/images/items/meet.png"
+    },
+    { "width": 30, "height": 30, "id": 7, "score": 500, "image": "../assets/images/items/cake.png" }
+  ]
+}
