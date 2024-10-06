@@ -69,18 +69,28 @@
 ![player_die1-removebg-preview](https://github.com/user-attachments/assets/9a28ef48-911b-418d-af16-7f4d95ddb2d1)
 
 ## 스테이지 시스템
-### 배경
-![ground2](https://github.com/user-attachments/assets/925628f1-44f6-498e-b5ea-e1716c983439)
-### 스테이지 단계
-```js
-{ "id": 1000, "score": 0, "scorePerSecond": 10 },
-{ "id": 1001, "score": 300, "scorePerSecond": 20 },
-{ "id": 1002, "score": 1000, "scorePerSecond": 30 },
-{ "id": 1003, "score": 2500, "scorePerSecond": 40 },
-{ "id": 1004, "score": 5000, "scorePerSecond": 60 },
-{ "id": 1005, "score": 10000, "scorePerSecond": 80 },
-{ "id": 1006, "score": 20000, "scorePerSecond": 100 }
-```
+### 스테이지별 배경 및 점수
+#### 1 스테이지 - 1초당 10점
+![ground1](https://github.com/user-attachments/assets/26faaa60-acac-4888-a579-f0bf40d4a90d)
+
+#### 2 스테이지 - 1초당 20점
+![ground2](https://github.com/user-attachments/assets/4e9da9d8-1696-4a2e-a1fa-7587c39c5341)
+
+#### 3 스테이지-  1초당 30점
+![ground3](https://github.com/user-attachments/assets/9c8e92bb-303b-4547-ac32-87dd6b995994)
+
+#### 4 스테이지-  1초당 40점
+![ground4](https://github.com/user-attachments/assets/ef59a18f-b1e6-4df7-a38a-465b9117da7e)
+
+#### 5 스테이지 - 1초당 60점
+![ground5](https://github.com/user-attachments/assets/d4a9d836-c64f-41bd-9ddc-6caa9c5958ff)
+
+#### 6 스테이지 - 1초당 80점
+![ground6](https://github.com/user-attachments/assets/b022c147-7bcb-43c2-9f2e-cf9ab543d3ad)
+
+#### 7 스테이지 - 1초당 100점
+![ground7](https://github.com/user-attachments/assets/1392a881-c877-49a7-aec3-9f6af9eeb144)
+
 ## 아이템 시스템
 ### 아이템 목록 및 점수
 - ![apple](https://github.com/user-attachments/assets/4c1f77fd-3bcf-409d-996a-fc33e75bd729) - 사과: 10점 / 1스테이지부터 등장
