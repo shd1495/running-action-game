@@ -20,7 +20,7 @@ class Ground {
     this.y = this.canvas.height - this.height;
 
     this.groundImage = new Image();
-    this.setCurrStage(FIRST_STAGE_ID); // 초기 스테이지 설정
+    this.setCurrStage(FIRST_STAGE_ID);
 
     Ground.instance = this;
   }
@@ -56,6 +56,7 @@ class Ground {
 
   reset() {
     this.x = 0;
+    this.setCurrStage(FIRST_STAGE_ID);
   }
 }
 
