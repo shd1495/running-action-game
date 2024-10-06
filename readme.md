@@ -5,9 +5,9 @@
   
 - Redis cloud - ioredis
   
-- publish - AWS EC2
+- Publish - AWS EC2
   
-- PM -= Yarn
+- PackageManager - Yarn
 
 ## 실행 방법
 - [게임 플레이](http://shd1495.store:3030/)
