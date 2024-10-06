@@ -165,7 +165,7 @@ function showChangeHighScore() {
   const fontSize = 30 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
   ctx.fillStyle = 'white';
-  const x = canvas.width / 16;
+  const x = canvas.width / 6;
   const y = canvas.height / 2;
   ctx.fillText('!Congratulation You got the highest score!', x, y);
 }
@@ -174,7 +174,7 @@ function showStartGameText() {
   const fontSize = 40 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
   ctx.fillStyle = 'white';
-  const x = canvas.width / 14;
+  const x = canvas.width / 7;
   const y = canvas.height / 2;
   ctx.fillText('Tap Screen or Press Space To Start', x, y);
 }
