@@ -2,7 +2,7 @@ import { getGameAssets } from '../init/assets.js';
 import { clearItem } from '../models/item.model.js';
 import { clearStage, getStage, setStage } from '../models/stage.model.js';
 import { getHighScore, setHighScore } from '../models/score.model.js';
-import { SCORE_GAP } from '../constants.js';
+import { SCORE_GAP } from '../utils/constants.js';
 import { calculateItemScore } from '../utils/calculate.js';
 
 export const gameStart = (userId, payload) => {

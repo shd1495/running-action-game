@@ -1,6 +1,6 @@
 import { getGameAssets } from '../init/assets.js';
 import { getStage, setStage } from '../models/stage.model.js';
-import { TIME, TIME_GAP } from '../constants.js';
+import { TIME, TIME_GAP } from '../utils/constants.js';
 import { calculateItemScore } from '../utils/calculate.js';
 
 export const moveStageHandler = async (userId, payload) => {
