@@ -18,31 +18,31 @@
       "id": 1002,
       "score": 1000,
       "scorePerSecond": 30,
-      "background": "../assets/images/backgrounds/ground2.png"
+      "background": "../assets/images/backgrounds/ground3.png"
     },
     {
       "id": 1003,
       "score": 2500,
       "scorePerSecond": 40,
-      "background": "../assets/images/backgrounds/ground2.png"
+      "background": "../assets/images/backgrounds/ground4.png"
     },
     {
       "id": 1004,
       "score": 5000,
       "scorePerSecond": 60,
-      "background": "../assets/images/backgrounds/ground2.png"
+      "background": "../assets/images/backgrounds/ground5.png"
     },
     {
       "id": 1005,
       "score": 10000,
       "scorePerSecond": 80,
-      "background": "../assets/images/backgrounds/ground2.png"
+      "background": "../assets/images/backgrounds/ground6.png"
     },
     {
       "id": 1006,
       "score": 20000,
       "scorePerSecond": 100,
-      "background": "../assets/images/backgrounds/ground2.png"
+      "background": "../assets/images/backgrounds/ground7.png"
     }
   ]
 }

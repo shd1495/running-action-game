@@ -86,7 +86,7 @@ class Score {
     const highScore = Math.floor(this.highScore);
     const y = 20 * this.scaleRatio;
 
-    const fontSize = 20 * this.scaleRatio;
+    const fontSize = 24 * this.scaleRatio;
     this.ctx.font = `${fontSize}px serif`;
     this.ctx.fillStyle = 'white';
 
