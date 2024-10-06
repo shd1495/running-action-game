@@ -5,6 +5,12 @@ import { getHighScore, setHighScore } from '../models/score.model.js';
 import { SCORE_GAP } from '../utils/constants.js';
 import { calculateItemScore } from '../utils/calculate.js';
 
+/**
+ * 게임 시작
+ * @param {String} userId
+ * @param {Object} payload
+ * @returns {Object}
+ */
 export const gameStart = (userId, payload) => {
   const { stages } = getGameAssets();
   clearStage(userId);
@@ -17,6 +23,13 @@ export const gameStart = (userId, payload) => {
   return { status: '성공', message: '게임 시작' };
 };
 
+/**
+ * 게임 끝
+ * @param {String} userId
+ * @param {Object} payload
+ * @param {Object} io
+ * @returns {Object}
+ */
 export const gameEnd = async (userId, payload, io) => {
   const { stages: stageData, items } = getGameAssets();
   // 클라이언트는 게임 종료 시 타임스탬프와 총 점수

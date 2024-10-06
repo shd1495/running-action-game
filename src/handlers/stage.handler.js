@@ -3,6 +3,12 @@ import { getStage, setStage } from '../models/stage.model.js';
 import { TIME, TIME_GAP } from '../utils/constants.js';
 import { calculateItemScore } from '../utils/calculate.js';
 
+/**
+ * 스테이지 이동 검증
+ * @param {String} userId
+ * @param {Object} payload
+ * @returns
+ */
 export const moveStageHandler = async (userId, payload) => {
   // 스테이지 단계별 상승
   // 일정 점수를 넘으면 다음 스테이지

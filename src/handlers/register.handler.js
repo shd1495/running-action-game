@@ -2,6 +2,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { handleConnection, handleDisconnect, handleEvent } from './helper.js';
 import { addUser, getUser } from '../models/user.model.js';
 
+/**
+ * 유저 접속
+ * @param {Object} io
+ */
 const registerHandler = (io) => {
   // 유저 접속시 (대기하는 함수)
   io.on('connection', async (socket) => {

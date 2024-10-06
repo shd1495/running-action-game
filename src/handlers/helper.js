@@ -5,6 +5,11 @@ import { getUsers, removeUser } from '../models/user.model.js';
 import { getHighScore } from '../models/score.model.js';
 import handlerMappings from './handlerMapping.js';
 
+/**
+ * 접속 해제
+ * @param {Object} socket
+ * @param {String} uuid
+ */
 export const handleDisconnect = async (socket, uuid) => {
   removeUser(uuid);
   clearStage(uuid);
@@ -13,10 +18,11 @@ export const handleDisconnect = async (socket, uuid) => {
   console.log('현재 접속 중인 유저들:', await getUsers());
 };
 
-// 스테이지에 따라 더 높은 점수 획득
-// 1스테이지 -> 0점, 1점씩 획득
-// 2스테이지 -> 1000점, 2점씩 획득
-
+/**
+ * 유저 접속
+ * @param {Object} socket
+ * @param {String} uuid
+ */
 export const handleConnection = async (socket, uuid) => {
   console.log('새로운 유저가 연결되었습니다.', 'uuid: ', uuid, 'socketId: ', socket.id);
   console.log('현재 접속 중인 유저들:', await getUsers());
@@ -36,6 +42,13 @@ export const handleConnection = async (socket, uuid) => {
   socket.emit('connection', { uuid });
 };
 
+/**
+ * 이벤트 핸들러
+ * @param {Object} io
+ * @param {Object} socket
+ * @param {Object} data
+ * @returns
+ */
 export const handleEvent = async (io, socket, data) => {
   // 클라언트 버전 체크
   //if (!data.CLIENT_VERSION) throw new Error('클라이언트 버전이 존재하지 않습니다.');
