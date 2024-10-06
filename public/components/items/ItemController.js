@@ -38,7 +38,7 @@ class ItemController {
     const index = this.getRandomNumber(0, itemTable?.itemId.length - 1);
     const itemInfo = this.itemImages[index];
     const x = this.canvas.width * 1.5;
-    const y = this.getRandomNumber(10, this.canvas.height - 50 - itemInfo.height);
+    const y = this.getRandomNumber(10, 200 - itemInfo.height);
 
     const item = new Item(
       this.ctx,
