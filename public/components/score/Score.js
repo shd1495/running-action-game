@@ -91,8 +91,8 @@ class Score {
     this.ctx.fillStyle = 'white';
 
     const scoreX = this.canvas.width - 75 * this.scaleRatio;
-    const highScoreX = scoreX - 125 * this.scaleRatio;
-    const stageX = highScoreX - 125 * this.scaleRatio;
+    const highScoreX = scoreX - 150 * this.scaleRatio;
+    const stageX = highScoreX - 150 * this.scaleRatio;
 
     const scorePadded = Math.floor(this.score).toString().padStart(6, 0);
     const highScorePadded = highScore.toString().padStart(6, 0);
