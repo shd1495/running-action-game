@@ -53,12 +53,6 @@ export const handleEvent = async (io, socket, data) => {
 
   const response = await handler(data.userId, data.payload, io);
 
-  // 브로드캐스트시
-  if (response.broadcast) {
-    io.emit('response', 'broadcast');
-    return;
-  }
-
   // 한 유저에게 보낼시
   socket.emit('response', response);
 };

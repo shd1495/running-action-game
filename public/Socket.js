@@ -11,6 +11,7 @@ const socket = io('http://localhost:3030', {
   },
 });
 
+// 최고 기록 보유자가 접속시
 socket.on('highestRecordUser', (data) => {
   console.log(`최고 기록 보유자 ${data.uuid}님 환영합니다.`);
 });
@@ -26,6 +27,7 @@ socket.on('connection', (data) => {
   localStorage.setItem('userId', userId);
 });
 
+// 유저 연결시 최고 기록 업데이트
 socket.on('getHighScore', (data) => {
   const scoreInstance = Score.instance;
   if (scoreInstance && data?.score) {

@@ -2,6 +2,11 @@ import redisClient from '../init/redis.js';
 
 const SCORE_SET = 'score';
 
+/**
+ * 최고 기록 설정
+ * @param {String} uuid
+ * @param {Int} score
+ */
 export const setHighScore = async (uuid, score) => {
   try {
     await redisClient.zadd(SCORE_SET, 'GT', score, uuid);
@@ -10,6 +15,10 @@ export const setHighScore = async (uuid, score) => {
   }
 };
 
+/**
+ * 최고 기록 조회
+ * @returns {Object || null}
+ */
 export const getHighScore = async () => {
   try {
     // 최고 점수를 가진 유저를 가져옴

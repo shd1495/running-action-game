@@ -2,7 +2,10 @@ import redisClient from '../init/redis.js';
 
 const USER_SET = 'user';
 
-// 유저 접속 시
+/**
+ * 유저 등록
+ * @param {Object} user
+ */
 export const addUser = async (user) => {
   try {
     await redisClient.set(user.uuid, JSON.stringify(user));
@@ -12,7 +15,10 @@ export const addUser = async (user) => {
   }
 };
 
-// 유저 접속 해제시
+/**
+ * 접속 중인 유저 목록에서 제거
+ * @param {String} uuid
+ */
 export const removeUser = (uuid) => {
   try {
     redisClient.del(uuid);
@@ -23,6 +29,10 @@ export const removeUser = (uuid) => {
   }
 };
 
+/**
+ * 접속 중인 유저 목록 조회
+ * @returns
+ */
 export const getUsers = async () => {
   try {
     const userIds = await redisClient.smembers(USER_SET);
@@ -38,6 +48,11 @@ export const getUsers = async () => {
   }
 };
 
+/**
+ * 유저 조회
+ * @param {String} uuid
+ * @returns {String || null}
+ */
 export const getUser = async (uuid) => {
   try {
     const user = await redisClient.get(uuid);

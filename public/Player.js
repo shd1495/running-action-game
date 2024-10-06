@@ -10,7 +10,9 @@ class Player {
 
   JUMP_SPEED = 0.6;
   GRAVITY = 0.1;
+  // 낙하 속도
   fallSpeed = 0;
+  // 점프 쿨타임
   COOL_TIME = 75;
   jumpCoolTime = 0;
 
@@ -78,6 +80,7 @@ class Player {
     }
 
     this.jump(deltaTime);
+    // 점프 쿨타임
     if (this.jumpCoolTime > 0) {
       this.jumpCoolTime -= deltaTime;
       if (this.jumpCoolTime < 0) this.jumpCoolTime = 0;
@@ -105,8 +108,8 @@ class Player {
       // 떨어질 때
     } else {
       if (this.y < this.yStandingPosition) {
-        this.fallSpeed += this.GRAVITY * deltaTime * 0.2;
-        this.fallSpeed = Math.min(this.fallSpeed, 6);
+        this.fallSpeed += this.GRAVITY * deltaTime * 0.3;
+        this.fallSpeed = Math.min(this.fallSpeed, 10);
         this.y += this.fallSpeed * this.scaleRatio;
 
         // 혹시 위치가 어긋 났을때 원래 위치로

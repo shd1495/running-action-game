@@ -4,7 +4,10 @@ const STAGE_SET = 'stage';
 
 // key: uuid, value: array -> stage 정보는 배열이다.
 
-// 스테이지 초기화
+/**
+ * 스테이지 초기화
+ * @param {String} uuid
+ */
 export const clearStage = (uuid) => {
   try {
     redisClient.del(STAGE_SET + uuid);
@@ -13,6 +16,11 @@ export const clearStage = (uuid) => {
   }
 };
 
+/**
+ * 유저의 현재 스테이지 조회
+ * @param {String} uuid
+ * @returns {Array}
+ */
 export const getStage = async (uuid) => {
   try {
     const stages = await redisClient.lrange(STAGE_SET + uuid, 0, -1);
@@ -23,6 +31,12 @@ export const getStage = async (uuid) => {
   }
 };
 
+/**
+ *  유저의 스테이지 정보 추가
+ * @param {String} uuid
+ * @param {Int} id
+ * @param {Int} timestamp
+ */
 export const setStage = async (uuid, id, timestamp) => {
   try {
     await redisClient.rpush(STAGE_SET + uuid, JSON.stringify({ id, timestamp }));
