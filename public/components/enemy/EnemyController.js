@@ -1,6 +1,7 @@
 import Enemy from './Enemy.js';
 
 class EnemyController {
+  static instance = null;
   CACTUS_INTERVAL_MIN = 500;
   CACTUS_INTERVAL_MAX = 2000;
 
@@ -8,6 +9,9 @@ class EnemyController {
   enemy = [];
 
   constructor(ctx, enemyImages, scaleRatio, speed) {
+    if (EnemyController.instance) {
+      return EnemyController.instance; // 이미 인스턴스가 있다면 그 인스턴스를 반환
+    }
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.enemyImages = enemyImages;
@@ -15,6 +19,7 @@ class EnemyController {
     this.speed = speed;
 
     this.setNextEnemyTime();
+    EnemyController.instance = this;
   }
 
   setNextEnemyTime() {
