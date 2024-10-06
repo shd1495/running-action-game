@@ -63,7 +63,14 @@ function createSprites() {
     scaleRatio,
   );
 
-  ground = new Ground(ctx, groundWidthInGame, groundHeightInGame, GROUND_SPEED, scaleRatio);
+  ground = new Ground(
+    ctx,
+    groundWidthInGame,
+    groundHeightInGame,
+    GROUND_SPEED,
+    scaleRatio,
+    STAGE_CONFIG,
+  );
 
   const enemyImages = ENEMY_CONFIG.map((enemy) => {
     const image = new Image();
@@ -90,7 +97,7 @@ function createSprites() {
 
   itemController = new ItemController(ctx, itemImages, scaleRatio, GROUND_SPEED, ITEM_UNLOCK);
 
-  score = new Score(ctx, scaleRatio, STAGE_CONFIG, ITEM_CONFIG, itemController);
+  score = new Score(ctx, scaleRatio, STAGE_CONFIG, ITEM_CONFIG, itemController, ground);
 }
 
 function initializeBGM() {
@@ -133,6 +140,7 @@ if (screen.orientation) {
   screen.orientation.addEventListener('change', setScreen);
 }
 
+// 게임 오버를 보여주는 함수
 function showGameOver() {
   const fontSize = 70 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
@@ -142,6 +150,7 @@ function showGameOver() {
   ctx.fillText('GAME OVER', x, y);
 }
 
+// 스테이지가 변경되면 알려주는 함수
 function showChangeStage() {
   const fontSize = 70 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
@@ -151,13 +160,14 @@ function showChangeStage() {
   ctx.fillText(`Stage ${score.currentStageId - 999}`, x, y);
 }
 
+// 게임 종료 후 최고 기록이면 알림해주는 함수
 function showChangeHighScore() {
   const fontSize = 30 * scaleRatio;
   ctx.font = `${fontSize}px Verdana`;
   ctx.fillStyle = 'white';
   const x = canvas.width / 16;
   const y = canvas.height / 2;
-  ctx.fillText(`!Congratulation! you got the highest score! ${parseInt(score.score)}`, x, y);
+  ctx.fillText('!Congratulation You got the highest score!', x, y);
 }
 
 function showStartGameText() {
@@ -233,6 +243,7 @@ function gameLoop(currentTime) {
 
   if (!gameover && enemyController.collideWith(player)) {
     gameover = true;
+    // 게임이 끝났을 때 점수가 최고 기록보다 높으면 최고 기록 업데이트
     const currentScore = score.score;
     if (currentScore > score.highScore) {
       score.isHighScore = true;
@@ -254,6 +265,7 @@ function gameLoop(currentTime) {
   itemController.draw();
   score.draw();
 
+  // 최고 기록을 갱신했으면 축하 메시지 아니면 게임 오버
   if (gameover && score.isHighScore) {
     showChangeHighScore();
   } else if (gameover) {

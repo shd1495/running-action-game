@@ -10,7 +10,7 @@ class Score {
   highScore = 0;
   isHighScore = false;
 
-  constructor(ctx, scaleRatio, stageData, itemData, itemController) {
+  constructor(ctx, scaleRatio, stageData, itemData, itemController, ground) {
     if (Score.instance) {
       return Score.instance; // 이미 인스턴스가 있다면 그 인스턴스를 반환
     }
@@ -21,6 +21,7 @@ class Score {
     this.itemData = itemData;
     this.itemController = itemController;
     this.itemGetSound = new Audio('./sounds/getItem.wav');
+    this.ground = ground;
 
     Score.instance = this;
   }
@@ -46,8 +47,12 @@ class Score {
         timestamp: Date.now(),
       });
       this.currentStageId = nextStage.id;
+      // 아이템 컨트롤러 현재 스테이지 설정
       this.itemController.setCurrStage(this.currentStageId);
+      // ground 현재 스테이지 설정
+      this.ground.setCurrStage(this.currentStageId);
     }
+    // 스테이지 변경 알림을 보여주는 시간 - 1초
     setTimeout(() => {
       if (Math.floor(this.score) < nextStage?.score) {
         this.stageChange = true;
@@ -59,6 +64,7 @@ class Score {
     this.itemGetSound.play();
     const item = this.itemData.find((item) => item.id == itemId);
     this.score += item.score || 0;
+    // 아이템 획득 이벤트
     if (item) sendEvent(12, { timestamp: Date.now(), itemId: itemId });
   }
 

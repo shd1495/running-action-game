@@ -1,17 +1,35 @@
+import { FIRST_STAGE_ID } from './Constants.js';
+
 class Ground {
-  constructor(ctx, width, height, speed, scaleRatio) {
+  static instance = null;
+  currentStage = FIRST_STAGE_ID;
+
+  constructor(ctx, width, height, speed, scaleRatio, stageData) {
+    if (Ground.instance) {
+      return Ground.instance; // 이미 인스턴스가 있다면 그 인스턴스를 반환
+    }
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.width = width;
     this.height = height;
     this.speed = speed;
     this.scaleRatio = scaleRatio;
+    this.stageData = stageData;
 
     this.x = 0;
     this.y = this.canvas.height - this.height;
 
     this.groundImage = new Image();
-    this.groundImage.src = 'images/ground.png';
+    this.setCurrStage(FIRST_STAGE_ID); // 초기 스테이지 설정
+
+    Ground.instance = this;
+  }
+
+  setCurrStage(stage) {
+    this.currentStage = stage;
+    // 스테이지별 배경 설정
+    const stageTable = this.stageData.find((stage) => this.currentStage === stage.id);
+    this.groundImage.src = stageTable.background;
   }
 
   update(gameSpeed, deltaTime) {
