@@ -90,7 +90,7 @@ class Score {
     this.ctx.font = `${fontSize}px serif`;
     this.ctx.fillStyle = 'white';
 
-    const scoreX = this.canvas.width - 75 * this.scaleRatio;
+    const scoreX = this.canvas.width - 100 * this.scaleRatio;
     const highScoreX = scoreX - 150 * this.scaleRatio;
     const stageX = highScoreX - 150 * this.scaleRatio;
 
